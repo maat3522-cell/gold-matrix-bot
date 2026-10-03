@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
 
-from strategy import StrategyDecision
-
 
 class StrategyBase(ABC):
 
@@ -11,5 +9,5 @@ class StrategyBase(ABC):
         pass
 
     @abstractmethod
-    def evaluate(self, score: float) -> StrategyDecision:
+    def evaluate(self, score: float):
         pass
