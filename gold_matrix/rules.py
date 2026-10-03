@@ -7,39 +7,82 @@ from config import (
 
 def trend_rule(trend):
     if trend == "BULLISH":
-        return TREND_SCORE
+        return {
+            "name": "trend",
+            "score": TREND_SCORE,
+            "status": "PASS",
+            "reason": "Bullish trend detected",
+        }
 
     if trend == "BEARISH":
-        return -TREND_SCORE
+        return {
+            "name": "trend",
+            "score": -TREND_SCORE,
+            "status": "PASS",
+            "reason": "Bearish trend detected",
+        }
 
-    return 0
+    return {
+        "name": "trend",
+        "score": 0,
+        "status": "NEUTRAL",
+        "reason": "No clear trend",
+    }
 
 
 def momentum_rule(trend, momentum):
     if momentum != "STRONG":
-        return 0
+        return {
+            "name": "momentum",
+            "score": 0,
+            "status": "NEUTRAL",
+            "reason": "Momentum is not strong",
+        }
 
     if trend == "BULLISH":
-        return MOMENTUM_SCORE
+        return {
+            "name": "momentum",
+            "score": MOMENTUM_SCORE,
+            "status": "PASS",
+            "reason": "Strong bullish momentum",
+        }
 
     if trend == "BEARISH":
-        return -MOMENTUM_SCORE
+        return {
+            "name": "momentum",
+            "score": -MOMENTUM_SCORE,
+            "status": "PASS",
+            "reason": "Strong bearish momentum",
+        }
 
-    return 0
+    return {
+        "name": "momentum",
+        "score": 0,
+        "status": "NEUTRAL",
+        "reason": "Strong momentum without directional trend",
+    }
 
 
 def volatility_rule(volatility):
     if volatility == "NORMAL":
-        return VOLATILITY_SCORE
+        return {
+            "name": "volatility",
+            "score": VOLATILITY_SCORE,
+            "status": "PASS",
+            "reason": "Volatility is within normal range",
+        }
 
-    return 0
+    return {
+        "name": "volatility",
+        "score": 0,
+        "status": "NEUTRAL",
+        "reason": "Volatility is outside preferred range",
+    }
 
 
 def run_rules(trend, momentum, volatility):
-    results = {
+    return {
         "trend": trend_rule(trend),
         "momentum": momentum_rule(trend, momentum),
         "volatility": volatility_rule(volatility),
     }
-
-    return results
