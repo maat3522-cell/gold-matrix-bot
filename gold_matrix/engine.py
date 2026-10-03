@@ -29,10 +29,14 @@ def analyze_price(price):
             "reason": "Invalid price",
         }
 
+    signal = "WAIT"
+    confidence = 0
+    reason = "No valid setup detected"
+
     return {
-        "signal": "WAIT",
-        "confidence": 0,
-        "reason": "Market analysis not active yet",
+        "signal": signal,
+        "confidence": confidence,
+        "reason": reason,
         "symbol": config["symbol"],
         "timeframe": config["timeframe"],
     }
