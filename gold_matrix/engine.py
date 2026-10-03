@@ -19,6 +19,26 @@ def get_config():
     }
 
 
+def calculate_score(trend, momentum, volatility):
+    score = 0
+
+    if trend == "BULLISH":
+        score += 40
+    elif trend == "BEARISH":
+        score -= 40
+
+    if momentum == "STRONG":
+        if trend == "BULLISH":
+            score += 30
+        elif trend == "BEARISH":
+            score -= 30
+
+    if volatility == "NORMAL":
+        score += 10
+
+    return score
+
+
 def analyze_market(
     price,
     trend="NEUTRAL",
@@ -34,9 +54,25 @@ def analyze_market(
             "reason": "Invalid price",
         }
 
+    score = calculate_score(
+        trend,
+        momentum,
+        volatility,
+    )
+
     signal = "WAIT"
     confidence = 0
     reason = "No valid setup detected"
+
+    if score >= 70:
+        signal = "BUY"
+        confidence = score
+        reason = "Bullish conditions detected"
+
+    elif score <= -70:
+        signal = "SELL"
+        confidence = abs(score)
+        reason = "Bearish conditions detected"
 
     return {
         "signal": signal,
@@ -48,4 +84,5 @@ def analyze_market(
         "trend": trend,
         "momentum": momentum,
         "volatility": volatility,
+        "score": score,
     }
