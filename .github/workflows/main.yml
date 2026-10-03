@@ -24,3 +24,6 @@ jobs:
 
       - name: Test Strategy
         run: python gold_matrix/test_strategy.py
+
+      - name: Test Settings
+        run: python gold_matrix/test_settings.py
