@@ -1,4 +1,3 @@
-
 from config import (
     SYMBOL,
     TIMEFRAME,
@@ -17,4 +16,23 @@ def get_config():
         "tp_points": DEFAULT_TP_POINTS,
         "sl_points": DEFAULT_SL_POINTS,
         "min_confidence": MIN_CONFIDENCE,
+    }
+
+
+def analyze_price(price):
+    config = get_config()
+
+    if price <= 0:
+        return {
+            "signal": "INVALID",
+            "confidence": 0,
+            "reason": "Invalid price",
+        }
+
+    return {
+        "signal": "WAIT",
+        "confidence": 0,
+        "reason": "Market analysis not active yet",
+        "symbol": config["symbol"],
+        "timeframe": config["timeframe"],
     }
