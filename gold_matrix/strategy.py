@@ -40,4 +40,4 @@ class DefaultStrategy(StrategyBase):
             signal="WAIT",
             confidence=0,
             reason="No valid setup detected",
-        )        )
+        )
