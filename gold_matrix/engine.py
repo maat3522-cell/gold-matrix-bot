@@ -1,3 +1,4 @@
+
 from config import (
     SYMBOL,
     TIMEFRAME,
@@ -9,6 +10,7 @@ from config import (
 
 from market import MarketContext
 from rules import run_rules
+from signal import Signal
 
 
 def get_config():
@@ -40,31 +42,37 @@ def calculate_score(context: MarketContext):
 def analyze_market(context: MarketContext):
     score, rule_results = calculate_score(context)
 
-    signal = "WAIT"
+    signal_type = "WAIT"
     confidence = 0
     reason = "No valid setup detected"
 
     if score >= MIN_CONFIDENCE:
-        signal = "BUY"
+        signal_type = "BUY"
         confidence = score
         reason = "Bullish conditions detected"
 
     elif score <= -MIN_CONFIDENCE:
-        signal = "SELL"
+        signal_type = "SELL"
         confidence = abs(score)
         reason = "Bearish conditions detected"
 
+    signal = Signal(
+        symbol=context.asset.symbol,
+        timeframe=context.timeframe,
+        signal=signal_type,
+        price=context.price,
+        score=score,
+        confidence=confidence,
+        reason=reason,
+        strategy="default",
+    )
+
     return {
-        "symbol": context.asset.symbol,
-        "timeframe": context.timeframe,
-        "price": context.price,
+        "signal": signal,
+        "rules": rule_results,
         "asset_type": context.asset.asset_type,
         "trend": context.trend,
         "momentum": context.momentum,
         "volatility": context.volatility,
-        "score": score,
-        "signal": signal,
-        "confidence": confidence,
-        "reason": reason,
-        "rules": rule_results,
     }
+
