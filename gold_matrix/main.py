@@ -1,4 +1,4 @@
-from engine import get_config, analyze_price
+from engine import get_config, analyze_market
 
 
 def main():
@@ -13,14 +13,22 @@ def main():
     print(f"SL: {config['sl_points']} points")
     print(f"Minimum confidence: {config['min_confidence']}%")
 
-    test_price = 4500
+    test_price = 4430
 
-    result = analyze_price(test_price)
+    result = analyze_market(
+        price=test_price,
+        trend="BULLISH",
+        momentum="STRONG",
+        volatility="NORMAL",
+    )
 
     print("")
-    print("PRICE ANALYSIS")
+    print("MARKET ANALYSIS")
     print("-------------------")
-    print(f"Price: {test_price}")
+    print(f"Price: {result['price']}")
+    print(f"Trend: {result['trend']}")
+    print(f"Momentum: {result['momentum']}")
+    print(f"Volatility: {result['volatility']}")
     print(f"Signal: {result['signal']}")
     print(f"Confidence: {result['confidence']}%")
     print(f"Reason: {result['reason']}")
