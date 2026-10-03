@@ -8,14 +8,16 @@ from config import (
     STRATEGY_NAME,
 )
 
+from settings_model import Settings
 
-def get_settings():
-    return {
-        "symbol": SYMBOL,
-        "timeframe": TIMEFRAME,
-        "risk_percent": RISK_PERCENT,
-        "tp_points": DEFAULT_TP_POINTS,
-        "sl_points": DEFAULT_SL_POINTS,
-        "min_confidence": MIN_CONFIDENCE,
-        "strategy_name": STRATEGY_NAME,
-    }
+
+def get_settings() -> Settings:
+    return Settings(
+        symbol=SYMBOL,
+        timeframe=TIMEFRAME,
+        risk_percent=RISK_PERCENT,
+        tp_points=DEFAULT_TP_POINTS,
+        sl_points=DEFAULT_SL_POINTS,
+        min_confidence=MIN_CONFIDENCE,
+        strategy_name=STRATEGY_NAME,
+    )
