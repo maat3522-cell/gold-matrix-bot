@@ -1,12 +1,8 @@
-name: Gold Matrix Test
+      - name: Run Gold Matrix
+        run: python gold_matrix/main.py
 
-on:
-  workflow_dispatch:
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-
+      - name: Test Asset Registry
+        run: python gold_matrix/test_assets.py
     steps:
       - name: Checkout
         uses: actions/checkout@v4
