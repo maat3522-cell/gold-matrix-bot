@@ -5,7 +5,9 @@ from typing import Optional
 @dataclass
 class Signal:
     symbol: str
+    asset_type: str
     timeframe: str
+
     signal: str
 
     price: float
