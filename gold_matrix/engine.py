@@ -10,8 +10,8 @@ from config import (
 )
 
 from market import MarketContext
-from rules import run_rules
 from signal import Signal
+from scoring import calculate_score
 from strategy_factory import create_strategy
 
 
@@ -25,21 +25,6 @@ def get_config():
         "min_confidence": MIN_CONFIDENCE,
         "strategy_name": STRATEGY_NAME,
     }
-
-
-def calculate_score(context: MarketContext):
-    rule_results = run_rules(
-        context.trend,
-        context.momentum,
-        context.volatility,
-    )
-
-    total_score = sum(
-        rule["score"]
-        for rule in rule_results.values()
-    )
-
-    return total_score, rule_results
 
 
 def analyze_market(context: MarketContext):
