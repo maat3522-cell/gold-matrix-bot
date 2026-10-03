@@ -29,9 +29,7 @@ def calculate_score(context: MarketContext):
         context.volatility,
     )
 
-    total_score = sum(rule_results.values())
-
-    return total_score
+    return sum(rule_results.values())
 
 
 def analyze_market(context: MarketContext):
@@ -52,10 +50,10 @@ def analyze_market(context: MarketContext):
         reason = "Bearish conditions detected"
 
     return {
-        "symbol": context.symbol,
+        "symbol": context.asset.symbol,
         "timeframe": context.timeframe,
         "price": context.price,
-        "asset_type": context.asset_type,
+        "asset_type": context.asset.asset_type,
         "trend": context.trend,
         "momentum": context.momentum,
         "volatility": context.volatility,
