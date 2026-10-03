@@ -1,3 +1,4 @@
+
 from engine import get_config, analyze_market
 from market import MarketContext
 from asset_registry import get_asset
@@ -46,6 +47,18 @@ def main():
     print(f"Signal: {result['signal']}")
     print(f"Confidence: {result['confidence']}%")
     print(f"Reason: {result['reason']}")
+
+    print()
+    print("RULE DETAILS")
+    print("-------------------")
+
+    for rule in result["rules"].values():
+        print(
+            f"{rule['name']}: "
+            f"score={rule['score']}, "
+            f"status={rule['status']}, "
+            f"reason={rule['reason']}"
+        )
 
 
 if __name__ == "__main__":
