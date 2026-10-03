@@ -58,6 +58,7 @@ def analyze_market(context: MarketContext):
 
     signal = Signal(
         symbol=context.asset.symbol,
+        asset_type=context.asset.asset_type,
         timeframe=context.timeframe,
         signal=signal_type,
         price=context.price,
@@ -75,4 +76,3 @@ def analyze_market(context: MarketContext):
         "momentum": context.momentum,
         "volatility": context.volatility,
     }
-
