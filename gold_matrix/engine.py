@@ -29,11 +29,16 @@ def calculate_score(context: MarketContext):
         context.volatility,
     )
 
-    return sum(rule_results.values())
+    total_score = sum(
+        rule["score"]
+        for rule in rule_results.values()
+    )
+
+    return total_score, rule_results
 
 
 def analyze_market(context: MarketContext):
-    score = calculate_score(context)
+    score, rule_results = calculate_score(context)
 
     signal = "WAIT"
     confidence = 0
@@ -61,4 +66,5 @@ def analyze_market(context: MarketContext):
         "signal": signal,
         "confidence": confidence,
         "reason": reason,
+        "rules": rule_results,
     }
