@@ -6,6 +6,7 @@ from config import (
     DEFAULT_TP_POINTS,
     DEFAULT_SL_POINTS,
     MIN_CONFIDENCE,
+    STRATEGY_NAME,
 )
 
 from market import MarketContext
@@ -21,6 +22,7 @@ def get_config():
         "tp_points": DEFAULT_TP_POINTS,
         "sl_points": DEFAULT_SL_POINTS,
         "min_confidence": MIN_CONFIDENCE,
+        "strategy_name": STRATEGY_NAME,
     }
 
 
@@ -65,7 +67,7 @@ def analyze_market(context: MarketContext):
         score=score,
         confidence=confidence,
         reason=reason,
-        strategy="default",
+        strategy=STRATEGY_NAME,
     )
 
     return {
