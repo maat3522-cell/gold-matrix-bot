@@ -1,4 +1,5 @@
 from engine import get_config, analyze_market
+from market import MarketContext
 
 
 def main():
@@ -13,19 +14,26 @@ def main():
     print(f"SL: {config['sl_points']} points")
     print(f"Minimum confidence: {config['min_confidence']}%")
 
-    test_price = 4430
+    print()
+    print("MARKET ANALYSIS")
+    print("-------------------")
 
-    result = analyze_market(
-        price=test_price,
+    context = MarketContext(
+        symbol="XAUUSD",
+        timeframe="M5",
+        price=4430,
+        asset_type="metal",
         trend="BULLISH",
         momentum="STRONG",
         volatility="NORMAL",
     )
 
-    print("")
-    print("MARKET ANALYSIS")
-    print("-------------------")
+    result = analyze_market(context)
+
+    print(f"Symbol: {result['symbol']}")
+    print(f"Timeframe: {result['timeframe']}")
     print(f"Price: {result['price']}")
+    print(f"Asset Type: {result['asset_type']}")
     print(f"Trend: {result['trend']}")
     print(f"Momentum: {result['momentum']}")
     print(f"Volatility: {result['volatility']}")
