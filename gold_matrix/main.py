@@ -13,11 +13,16 @@ def main():
     print(f"SL: {config['sl_points']} points")
     print(f"Minimum confidence: {config['min_confidence']}%")
 
+    print("STEP 1 OK")
+
     test_price = 4430
+
+    print("STEP 2 OK")
 
     result = analyze_price(test_price)
 
-    print("")
+    print("STEP 3 OK")
+
     print("PRICE ANALYSIS")
     print("-------------------")
     print(f"Price: {test_price}")
