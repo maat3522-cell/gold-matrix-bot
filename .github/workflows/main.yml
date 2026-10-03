@@ -30,3 +30,6 @@ jobs:
 
       - name: Test Rules
         run: python gold_matrix/test_rules.py
+
+      - name: Test Scoring
+        run: python gold_matrix/test_scoring.py
