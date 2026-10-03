@@ -19,7 +19,12 @@ def get_config():
     }
 
 
-def analyze_price(price):
+def analyze_market(
+    price,
+    trend="NEUTRAL",
+    momentum="NEUTRAL",
+    volatility="NORMAL",
+):
     config = get_config()
 
     if price <= 0:
@@ -29,20 +34,9 @@ def analyze_price(price):
             "reason": "Invalid price",
         }
 
-    if price >= 4500:
-        signal = "SELL"
-        confidence = 70
-        reason = "Test condition: price is at or above 4500"
-
-    elif price <= 4300:
-        signal = "BUY"
-        confidence = 70
-        reason = "Test condition: price is at or below 4300"
-
-    else:
-        signal = "WAIT"
-        confidence = 0
-        reason = "No test condition detected"
+    signal = "WAIT"
+    confidence = 0
+    reason = "No valid setup detected"
 
     return {
         "signal": signal,
@@ -50,4 +44,8 @@ def analyze_price(price):
         "reason": reason,
         "symbol": config["symbol"],
         "timeframe": config["timeframe"],
+        "price": price,
+        "trend": trend,
+        "momentum": momentum,
+        "volatility": volatility,
     }
