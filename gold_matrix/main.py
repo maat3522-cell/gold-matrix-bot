@@ -1,4 +1,3 @@
-
 from engine import get_config, analyze_market
 from market import MarketContext
 from asset_registry import get_asset
@@ -36,17 +35,20 @@ def main():
 
     result = analyze_market(context)
 
-    print(f"Symbol: {result['symbol']}")
-    print(f"Timeframe: {result['timeframe']}")
-    print(f"Price: {result['price']}")
+    signal = result["signal"]
+
+    print(f"Symbol: {signal.symbol}")
+    print(f"Timeframe: {signal.timeframe}")
+    print(f"Price: {signal.price}")
     print(f"Asset Type: {result['asset_type']}")
     print(f"Trend: {result['trend']}")
     print(f"Momentum: {result['momentum']}")
     print(f"Volatility: {result['volatility']}")
-    print(f"Score: {result['score']}")
-    print(f"Signal: {result['signal']}")
-    print(f"Confidence: {result['confidence']}%")
-    print(f"Reason: {result['reason']}")
+    print(f"Score: {signal.score}")
+    print(f"Signal: {signal.signal}")
+    print(f"Confidence: {signal.confidence}%")
+    print(f"Reason: {signal.reason}")
+    print(f"Strategy: {signal.strategy}")
 
     print()
     print("RULE DETAILS")
