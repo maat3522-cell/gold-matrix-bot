@@ -29,6 +29,7 @@ def main():
     print(f"Trend: {result['trend']}")
     print(f"Momentum: {result['momentum']}")
     print(f"Volatility: {result['volatility']}")
+    print(f"Score: {result['score']}")
     print(f"Signal: {result['signal']}")
     print(f"Confidence: {result['confidence']}%")
     print(f"Reason: {result['reason']}")
