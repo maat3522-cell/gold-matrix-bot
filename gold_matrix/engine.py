@@ -12,7 +12,7 @@ from config import (
 from market import MarketContext
 from rules import run_rules
 from signal import Signal
-from strategy import DefaultStrategy
+from strategy_factory import create_strategy
 
 
 def get_config():
@@ -45,9 +45,7 @@ def calculate_score(context: MarketContext):
 def analyze_market(context: MarketContext):
     score, rule_results = calculate_score(context)
 
-    strategy = DefaultStrategy(
-        min_confidence=MIN_CONFIDENCE
-    )
+    strategy = create_strategy(STRATEGY_NAME)
 
     decision = strategy.evaluate(score)
 
