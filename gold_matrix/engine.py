@@ -5,10 +5,9 @@ from config import (
     DEFAULT_TP_POINTS,
     DEFAULT_SL_POINTS,
     MIN_CONFIDENCE,
-    TREND_SCORE,
-    MOMENTUM_SCORE,
-    VOLATILITY_SCORE,
 )
+
+from rules import run_rules
 
 
 def get_config():
@@ -22,46 +21,14 @@ def get_config():
     }
 
 
-def score_trend(trend):
-    if trend == "BULLISH":
-        return TREND_SCORE
-
-    if trend == "BEARISH":
-        return -TREND_SCORE
-
-    return 0
-
-
-def score_momentum(trend, momentum):
-    if momentum != "STRONG":
-        return 0
-
-    if trend == "BULLISH":
-        return MOMENTUM_SCORE
-
-    if trend == "BEARISH":
-        return -MOMENTUM_SCORE
-
-    return 0
-
-
-def score_volatility(volatility):
-    if volatility == "NORMAL":
-        return VOLATILITY_SCORE
-
-    return 0
-
-
 def calculate_score(trend, momentum, volatility):
-    trend_score = score_trend(trend)
-    momentum_score = score_momentum(trend, momentum)
-    volatility_score = score_volatility(volatility)
-
-    total_score = (
-        trend_score
-        + momentum_score
-        + volatility_score
+    rule_results = run_rules(
+        trend,
+        momentum,
+        volatility,
     )
+
+    total_score = sum(rule_results.values())
 
     return total_score
 
