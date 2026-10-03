@@ -1,15 +1,14 @@
 from dataclasses import dataclass
 from typing import Optional
 
+from assets import AssetProfile
+
 
 @dataclass
 class MarketContext:
-    symbol: str
+    asset: AssetProfile
     timeframe: str
     price: float
-
-    asset_type: Optional[str] = None
-    exchange: Optional[str] = None
 
     trend: str = "NEUTRAL"
     momentum: str = "NEUTRAL"
