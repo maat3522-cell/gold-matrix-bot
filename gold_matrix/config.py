@@ -10,6 +10,10 @@ DEFAULT_SL_POINTS = 150
 MIN_CONFIDENCE = 70
 
 
+# Strategy
+STRATEGY_NAME = "default"
+
+
 # Strategy scoring
 TREND_SCORE = 40
 MOMENTUM_SCORE = 30
