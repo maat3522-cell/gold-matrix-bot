@@ -8,25 +8,27 @@ def main():
 
     print("GOLD MATRIX ENGINE")
     print("-------------------")
-    print(f"Symbol: {config['symbol']}")
-    print(f"Timeframe: {config['timeframe']}")
-    print(f"Risk: {config['risk_percent']}%")
-    print(f"TP: {config['tp_points']} points")
-    print(f"SL: {config['sl_points']} points")
-    print(f"Minimum confidence: {config['min_confidence']}%")
+    print(f"Symbol: {config.symbol}")
+    print(f"Timeframe: {config.timeframe}")
+    print(f"Risk: {config.risk_percent}%")
+    print(f"TP: {config.tp_points} points")
+    print(f"SL: {config.sl_points} points")
+    print(f"Minimum confidence: {config.min_confidence}%")
 
     print()
     print("MARKET ANALYSIS")
     print("-------------------")
 
-    asset = get_asset("XAUUSD")
+    asset = get_asset(config.symbol)
 
     if asset is None:
-        raise ValueError("Asset not found: XAUUSD")
+        raise ValueError(
+            f"Asset not found: {config.symbol}"
+        )
 
     context = MarketContext(
         asset=asset,
-        timeframe="M5",
+        timeframe=config.timeframe,
         price=4430,
         trend="BULLISH",
         momentum="STRONG",
