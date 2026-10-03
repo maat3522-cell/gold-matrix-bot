@@ -33,3 +33,6 @@ jobs:
 
       - name: Test Scoring
         run: python gold_matrix/test_scoring.py
+
+      - name: Test Trade Plan
+        run: python gold_matrix/test_trade_plan.py
