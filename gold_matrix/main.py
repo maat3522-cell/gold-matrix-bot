@@ -1,5 +1,4 @@
-
-from engine import get_config
+from engine import get_config, analyze_price
 
 
 def main():
@@ -13,6 +12,18 @@ def main():
     print(f"TP: {config['tp_points']} points")
     print(f"SL: {config['sl_points']} points")
     print(f"Minimum confidence: {config['min_confidence']}%")
+
+    test_price = 4430
+
+    result = analyze_price(test_price)
+
+    print("")
+    print("PRICE ANALYSIS")
+    print("-------------------")
+    print(f"Price: {test_price}")
+    print(f"Signal: {result['signal']}")
+    print(f"Confidence: {result['confidence']}%")
+    print(f"Reason: {result['reason']}")
 
 
 if __name__ == "__main__":
