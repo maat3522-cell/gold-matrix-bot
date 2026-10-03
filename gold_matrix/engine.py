@@ -29,9 +29,20 @@ def analyze_price(price):
             "reason": "Invalid price",
         }
 
-    signal = "WAIT"
-    confidence = 0
-    reason = "No valid setup detected"
+    if price >= 4500:
+        signal = "SELL"
+        confidence = 70
+        reason = "Test condition: price is at or above 4500"
+
+    elif price <= 4300:
+        signal = "BUY"
+        confidence = 70
+        reason = "Test condition: price is at or below 4300"
+
+    else:
+        signal = "WAIT"
+        confidence = 0
+        reason = "No test condition detected"
 
     return {
         "signal": signal,
