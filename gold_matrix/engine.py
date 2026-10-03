@@ -22,27 +22,48 @@ def get_config():
     }
 
 
-def calculate_score(trend, momentum, volatility):
-    score = 0
-
-    # Trend
+def score_trend(trend):
     if trend == "BULLISH":
-        score += TREND_SCORE
-    elif trend == "BEARISH":
-        score -= TREND_SCORE
+        return TREND_SCORE
 
-    # Momentum
-    if momentum == "STRONG":
-        if trend == "BULLISH":
-            score += MOMENTUM_SCORE
-        elif trend == "BEARISH":
-            score -= MOMENTUM_SCORE
+    if trend == "BEARISH":
+        return -TREND_SCORE
 
-    # Volatility
+    return 0
+
+
+def score_momentum(trend, momentum):
+    if momentum != "STRONG":
+        return 0
+
+    if trend == "BULLISH":
+        return MOMENTUM_SCORE
+
+    if trend == "BEARISH":
+        return -MOMENTUM_SCORE
+
+    return 0
+
+
+def score_volatility(volatility):
     if volatility == "NORMAL":
-        score += VOLATILITY_SCORE
+        return VOLATILITY_SCORE
 
-    return score
+    return 0
+
+
+def calculate_score(trend, momentum, volatility):
+    trend_score = score_trend(trend)
+    momentum_score = score_momentum(trend, momentum)
+    volatility_score = score_volatility(volatility)
+
+    total_score = (
+        trend_score
+        + momentum_score
+        + volatility_score
+    )
+
+    return total_score
 
 
 def analyze_market(
