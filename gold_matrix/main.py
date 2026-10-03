@@ -1,5 +1,6 @@
 from engine import get_config, analyze_market
 from market import MarketContext
+from asset_registry import get_asset
 
 
 def main():
@@ -18,11 +19,15 @@ def main():
     print("MARKET ANALYSIS")
     print("-------------------")
 
+    asset = get_asset("XAUUSD")
+
+    if asset is None:
+        raise ValueError("Asset not found: XAUUSD")
+
     context = MarketContext(
-        symbol="XAUUSD",
+        asset=asset,
         timeframe="M5",
         price=4430,
-        asset_type="metal",
         trend="BULLISH",
         momentum="STRONG",
         volatility="NORMAL",
