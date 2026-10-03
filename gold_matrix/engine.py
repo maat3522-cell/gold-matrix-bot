@@ -5,6 +5,9 @@ from config import (
     DEFAULT_TP_POINTS,
     DEFAULT_SL_POINTS,
     MIN_CONFIDENCE,
+    TREND_SCORE,
+    MOMENTUM_SCORE,
+    VOLATILITY_SCORE,
 )
 
 
@@ -22,19 +25,22 @@ def get_config():
 def calculate_score(trend, momentum, volatility):
     score = 0
 
+    # Trend
     if trend == "BULLISH":
-        score += 40
+        score += TREND_SCORE
     elif trend == "BEARISH":
-        score -= 40
+        score -= TREND_SCORE
 
+    # Momentum
     if momentum == "STRONG":
         if trend == "BULLISH":
-            score += 30
+            score += MOMENTUM_SCORE
         elif trend == "BEARISH":
-            score -= 30
+            score -= MOMENTUM_SCORE
 
+    # Volatility
     if volatility == "NORMAL":
-        score += 10
+        score += VOLATILITY_SCORE
 
     return score
 
@@ -45,15 +51,6 @@ def analyze_market(
     momentum="NEUTRAL",
     volatility="NORMAL",
 ):
-    config = get_config()
-
-    if price <= 0:
-        return {
-            "signal": "INVALID",
-            "confidence": 0,
-            "reason": "Invalid price",
-        }
-
     score = calculate_score(
         trend,
         momentum,
@@ -64,25 +61,23 @@ def analyze_market(
     confidence = 0
     reason = "No valid setup detected"
 
-    if score >= 70:
+    if score >= MIN_CONFIDENCE:
         signal = "BUY"
         confidence = score
         reason = "Bullish conditions detected"
 
-    elif score <= -70:
+    elif score <= -MIN_CONFIDENCE:
         signal = "SELL"
         confidence = abs(score)
         reason = "Bearish conditions detected"
 
     return {
-        "signal": signal,
-        "confidence": confidence,
-        "reason": reason,
-        "symbol": config["symbol"],
-        "timeframe": config["timeframe"],
         "price": price,
         "trend": trend,
         "momentum": momentum,
         "volatility": volatility,
         "score": score,
+        "signal": signal,
+        "confidence": confidence,
+        "reason": reason,
     }
