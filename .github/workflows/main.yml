@@ -21,3 +21,6 @@ jobs:
 
       - name: Test Asset Registry
         run: python gold_matrix/test_assets.py
+
+      - name: Test Strategy
+        run: python gold_matrix/test_strategy.py
