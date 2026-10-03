@@ -27,3 +27,6 @@ jobs:
 
       - name: Test Settings
         run: python gold_matrix/test_settings.py
+
+      - name: Test Rules
+        run: python gold_matrix/test_rules.py
