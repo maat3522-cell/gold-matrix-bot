@@ -1,36 +1,23 @@
 
-from config import (
-    SYMBOL,
-    TIMEFRAME,
-    RISK_PERCENT,
-    DEFAULT_TP_POINTS,
-    DEFAULT_SL_POINTS,
-    MIN_CONFIDENCE,
-    STRATEGY_NAME,
-)
-
 from market import MarketContext
 from signal import Signal
 from scoring import calculate_score
 from strategy_factory import create_strategy
+from settings import get_settings
 
 
 def get_config():
-    return {
-        "symbol": SYMBOL,
-        "timeframe": TIMEFRAME,
-        "risk_percent": RISK_PERCENT,
-        "tp_points": DEFAULT_TP_POINTS,
-        "sl_points": DEFAULT_SL_POINTS,
-        "min_confidence": MIN_CONFIDENCE,
-        "strategy_name": STRATEGY_NAME,
-    }
+    return get_settings()
 
 
 def analyze_market(context: MarketContext):
+    settings = get_settings()
+
     score, rule_results = calculate_score(context)
 
-    strategy = create_strategy(STRATEGY_NAME)
+    strategy = create_strategy(
+        settings["strategy_name"]
+    )
 
     decision = strategy.evaluate(score)
 
