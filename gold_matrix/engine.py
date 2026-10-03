@@ -7,6 +7,7 @@ from config import (
     MIN_CONFIDENCE,
 )
 
+from market import MarketContext
 from rules import run_rules
 
 
@@ -21,11 +22,11 @@ def get_config():
     }
 
 
-def calculate_score(trend, momentum, volatility):
+def calculate_score(context: MarketContext):
     rule_results = run_rules(
-        trend,
-        momentum,
-        volatility,
+        context.trend,
+        context.momentum,
+        context.volatility,
     )
 
     total_score = sum(rule_results.values())
@@ -33,17 +34,8 @@ def calculate_score(trend, momentum, volatility):
     return total_score
 
 
-def analyze_market(
-    price,
-    trend="NEUTRAL",
-    momentum="NEUTRAL",
-    volatility="NORMAL",
-):
-    score = calculate_score(
-        trend,
-        momentum,
-        volatility,
-    )
+def analyze_market(context: MarketContext):
+    score = calculate_score(context)
 
     signal = "WAIT"
     confidence = 0
@@ -60,10 +52,13 @@ def analyze_market(
         reason = "Bearish conditions detected"
 
     return {
-        "price": price,
-        "trend": trend,
-        "momentum": momentum,
-        "volatility": volatility,
+        "symbol": context.symbol,
+        "timeframe": context.timeframe,
+        "price": context.price,
+        "asset_type": context.asset_type,
+        "trend": context.trend,
+        "momentum": context.momentum,
+        "volatility": context.volatility,
         "score": score,
         "signal": signal,
         "confidence": confidence,
