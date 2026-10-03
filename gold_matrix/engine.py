@@ -16,7 +16,7 @@ def analyze_market(context: MarketContext):
     score, rule_results = calculate_score(context)
 
     strategy = create_strategy(
-        settings["strategy_name"]
+        settings.strategy_name
     )
 
     decision = strategy.evaluate(score)
