@@ -18,3 +18,6 @@ jobs:
 
       - name: Run Gold Matrix
         run: python gold_matrix/main.py
+
+      - name: Test Asset Registry
+        run: python gold_matrix/test_assets.py
