@@ -100,4 +100,7 @@ jobs:
       - name: Test Backtest Config
         run: python gold_matrix/test_backtest_config.py
 
+      - name: Test Backtest Metrics
+        run: python gold_matrix/test_backtest_metrics.py
+
         
