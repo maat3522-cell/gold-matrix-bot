@@ -1,6 +1,7 @@
 from data.market_series import MarketDataSeries
 from backtest_result import BacktestResult, BacktestTrade
 from features.context_builder import build_market_context
+from scoring import calculate_score
 from strategy_factory import create_strategy
 
 
@@ -25,26 +26,9 @@ def run_feature_backtest(
             timeframe=timeframe,
         )
 
+        score, _ = calculate_score(context)
+
         strategy = create_strategy("default")
-
-        score = 0
-
-        if context.trend == "BULLISH":
-            score += 40
-
-        elif context.trend == "BEARISH":
-            score -= 40
-
-        if context.momentum == "STRONG":
-
-            if context.trend == "BULLISH":
-                score += 30
-
-            elif context.trend == "BEARISH":
-                score -= 30
-
-        if context.volatility == "NORMAL":
-            score += 10
 
         decision = strategy.evaluate(score)
 
