@@ -95,6 +95,9 @@ jobs:
         run: python gold_matrix/test_backtest_engine.py
 
       - name: Test Strategy Runner
-        run: python gold_matrix/test_strategy_runner.py   
+        run: python gold_matrix/test_strategy_runner.py  
+
+      - name: Test Backtest Config
+        run: python gold_matrix/test_backtest_config.py
 
         
