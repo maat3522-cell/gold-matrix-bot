@@ -5,6 +5,8 @@ from backtest_result import (
     BacktestTrade,
 )
 
+from backtest.config import BacktestConfig
+
 from backtest.metrics import (
     calculate_average_profit,
     calculate_average_loss,
@@ -19,7 +21,11 @@ def run_backtest(
     series: MarketDataSeries,
     symbol: str,
     timeframe: str,
+    config: BacktestConfig | None = None,
 ) -> BacktestResult:
+
+    if config is None:
+        config = BacktestConfig()
 
     trades = []
 
@@ -40,22 +46,38 @@ def run_backtest(
 
             continue
 
+        if direction == "BUY" and not config.allow_long:
+            continue
+
+        if direction == "SELL" and not config.allow_short:
+            continue
+
         entry_price = previous_candle.close
         exit_price = current_candle.close
 
         if direction == "BUY":
 
-            profit_loss = (
+            gross_profit_loss = (
                 exit_price
                 - entry_price
             )
 
         else:
 
-            profit_loss = (
+            gross_profit_loss = (
                 entry_price
                 - exit_price
             )
+
+        cost = (
+            config.commission_per_trade
+            + config.slippage_per_trade
+        )
+
+        profit_loss = (
+            gross_profit_loss
+            - cost
+        )
 
         trades.append(
             BacktestTrade(
