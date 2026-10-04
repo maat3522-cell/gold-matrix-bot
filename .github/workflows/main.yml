@@ -45,3 +45,6 @@ jobs:
 
       - name: Test Trade Planner
         run: python gold_matrix/test_trade_planner.py
+        
+      - name: Test Multi Asset
+        run: python gold_matrix/test_multi_asset.py
