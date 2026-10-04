@@ -15,7 +15,6 @@ def build_trade_plan(
     take_profit_points: float,
     account_balance: float,
     risk_percent: float,
-    point_value: float,
     risk_manager: RiskManager,
 ) -> TradePlan:
 
@@ -29,7 +28,7 @@ def build_trade_plan(
             account_balance=account_balance,
             risk_percent=risk_percent,
             stop_loss_points=stop_loss_points,
-            point_value=point_value,
+            asset=context.asset,
         )
     )
 
