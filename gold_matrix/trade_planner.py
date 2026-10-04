@@ -9,6 +9,7 @@ from price_utils import (
     normalize_price,
     points_to_price_distance,
 )
+from trade_plan_validator import validate_trade_plan
 
 
 def build_trade_plan(
@@ -25,6 +26,16 @@ def build_trade_plan(
     if not risk_manager.validate_risk(risk_percent):
         raise ValueError(
             "Risk percent exceeds allowed risk limits."
+        )
+
+    if stop_loss_points <= 0:
+        raise ValueError(
+            "Stop loss points must be greater than zero."
+        )
+
+    if take_profit_points <= 0:
+        raise ValueError(
+            "Take profit points must be greater than zero."
         )
 
     entry_price = normalize_price(
@@ -86,7 +97,7 @@ def build_trade_plan(
         context.asset,
     )
 
-    return TradePlan(
+    plan = TradePlan(
         symbol=context.asset.symbol,
         timeframe=context.timeframe,
         direction=direction,
@@ -96,3 +107,10 @@ def build_trade_plan(
         risk_percent=risk_percent,
         position_size=position_size,
     )
+
+    if not validate_trade_plan(plan):
+        raise ValueError(
+            "Generated trade plan is invalid."
+        )
+
+    return plan
