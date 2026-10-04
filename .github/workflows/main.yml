@@ -66,3 +66,6 @@ jobs:
 
       - name: Test Market Data
         run: python gold_matrix/test_market_data.py  
+
+      - name: Test Market Series
+        run: python gold_matrix/test_market_series.py      
