@@ -48,3 +48,6 @@ jobs:
         
       - name: Test Multi Asset
         run: python gold_matrix/test_multi_asset.py
+
+      - name: Test Price Utils
+        run: python gold_matrix/test_price_utils.py
