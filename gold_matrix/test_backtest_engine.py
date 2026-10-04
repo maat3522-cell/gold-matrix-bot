@@ -4,6 +4,7 @@ from data.market_data import MarketData
 from data.market_series import MarketDataSeries
 
 from backtest.engine import run_backtest
+from backtest.config import BacktestConfig
 
 
 def main():
@@ -51,10 +52,19 @@ def main():
         ]
     )
 
+    config = BacktestConfig(
+        initial_balance=10000.0,
+        commission_per_trade=1.0,
+        slippage_per_trade=1.0,
+        allow_long=True,
+        allow_short=True,
+    )
+
     result = run_backtest(
         series=series,
         symbol="XAUUSD",
         timeframe="M5",
+        config=config,
     )
 
     print(f"Total trades: {result.total_trades}")
@@ -73,13 +83,13 @@ def main():
     assert result.winning_trades == 3
     assert result.losing_trades == 0
 
-    assert result.total_profit_loss == 20.0
+    assert result.total_profit_loss == 14.0
     assert result.win_rate == 100.0
 
-    assert result.average_profit == 20.0 / 3
+    assert result.average_profit == 14.0 / 3
     assert result.average_loss == 0.0
 
-    assert result.largest_win == 12.0
+    assert result.largest_win == 10.0
     assert result.largest_loss == 0.0
 
     assert result.profit_factor == 0.0
@@ -88,6 +98,7 @@ def main():
     print()
     print("TRADE COUNT: PASSED")
     print("WIN/LOSS COUNT: PASSED")
+    print("COSTS: PASSED")
     print("TOTAL P/L: PASSED")
     print("WIN RATE: PASSED")
     print("AVERAGE PROFIT: PASSED")
