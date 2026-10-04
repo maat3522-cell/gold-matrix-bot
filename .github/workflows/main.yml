@@ -88,4 +88,7 @@ jobs:
       - name: Test Context Builder
         run: python gold_matrix/test_context_builder.py
 
+      - name: Test Backtest Result
+        run: python gold_matrix/test_backtest_result.py
+
         
