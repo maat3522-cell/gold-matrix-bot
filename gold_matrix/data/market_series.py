@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 
-from market_data import MarketData
+from data.market_data import MarketData
 
 
 @dataclass(frozen=True)
