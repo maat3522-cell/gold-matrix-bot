@@ -1,9 +1,9 @@
-
 from market import MarketContext
 from signal import Signal
 from scoring import calculate_score
 from strategy_factory import create_strategy
 from settings import get_settings
+from id_generator import generate_signal_id
 
 
 def get_config():
@@ -31,6 +31,7 @@ def analyze_market(context: MarketContext):
         confidence=decision.confidence,
         reason=decision.reason,
         strategy=strategy.name,
+        signal_id=generate_signal_id(),
     )
 
     return {
