@@ -33,11 +33,13 @@ def build_trade_plan(
     )
 
     stop_loss_distance = (
-        stop_loss_points * context.asset.point_size
+        stop_loss_points
+        * context.asset.point_size
     )
 
     take_profit_distance = (
-        take_profit_points * context.asset.point_size
+        take_profit_points
+        * context.asset.point_size
     )
 
     if direction == "BUY":
@@ -64,6 +66,18 @@ def build_trade_plan(
         raise ValueError(
             f"Unsupported direction: {direction}"
         )
+
+    decimals = context.asset.price_decimals
+
+    stop_loss = round(
+        stop_loss,
+        decimals,
+    )
+
+    take_profit = round(
+        take_profit,
+        decimals,
+    )
 
     return TradePlan(
         symbol=context.asset.symbol,
