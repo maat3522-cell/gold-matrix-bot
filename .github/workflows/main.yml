@@ -39,3 +39,6 @@ jobs:
 
       - name: Test Risk Manager
         run: python gold_matrix/test_risk_manager.py
+
+      - name: Test Position Sizing
+        run: python gold_matrix/test_position_sizing.py
