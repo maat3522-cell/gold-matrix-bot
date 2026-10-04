@@ -79,4 +79,7 @@ jobs:
       - name: Test Momentum
         run: python gold_matrix/test_momentum.py
 
+      - name: Test Volatility
+        run: python gold_matrix/test_volatility.py
+
         
