@@ -103,4 +103,7 @@ jobs:
       - name: Test Backtest Metrics
         run: python gold_matrix/test_backtest_metrics.py
 
+      - name: Test Backtest Equity
+        run: python gold_matrix/test_backtest_equity.py
+
         
