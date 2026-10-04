@@ -29,3 +29,13 @@ class BacktestResult:
     total_profit_loss: float
 
     win_rate: float
+
+    average_profit: float = 0.0
+    average_loss: float = 0.0
+
+    largest_win: float = 0.0
+    largest_loss: float = 0.0
+
+    profit_factor: float = 0.0
+
+    max_drawdown: float = 0.0
