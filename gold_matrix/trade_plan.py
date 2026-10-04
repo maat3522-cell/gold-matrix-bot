@@ -15,6 +15,7 @@ class TradePlan:
     take_profit: Optional[float] = None
 
     risk_percent: Optional[float] = None
+    position_size: Optional[float] = None
 
     strategy: Optional[str] = None
     signal_id: Optional[str] = None
