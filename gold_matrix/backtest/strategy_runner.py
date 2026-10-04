@@ -5,6 +5,13 @@ from backtest_result import (
     BacktestTrade,
 )
 
+from backtest.config import BacktestConfig
+
+from backtest.equity import (
+    calculate_equity_curve,
+    calculate_final_balance,
+)
+
 from backtest.metrics import (
     calculate_average_profit,
     calculate_average_loss,
@@ -24,7 +31,11 @@ def run_feature_backtest(
     timeframe: str,
     asset,
     strategy,
+    config: BacktestConfig | None = None,
 ) -> BacktestResult:
+
+    if config is None:
+        config = BacktestConfig()
 
     trades = []
 
@@ -47,6 +58,18 @@ def run_feature_backtest(
         if decision.signal == "WAIT":
             continue
 
+        if (
+            decision.signal == "BUY"
+            and not config.allow_long
+        ):
+            continue
+
+        if (
+            decision.signal == "SELL"
+            and not config.allow_short
+        ):
+            continue
+
         previous_candle = series.data[index - 1]
         current_candle = series.data[index]
 
@@ -55,17 +78,27 @@ def run_feature_backtest(
 
         if decision.signal == "BUY":
 
-            profit_loss = (
+            gross_profit_loss = (
                 exit_price
                 - entry_price
             )
 
         else:
 
-            profit_loss = (
+            gross_profit_loss = (
                 entry_price
                 - exit_price
             )
+
+        cost = (
+            config.commission_per_trade
+            + config.slippage_per_trade
+        )
+
+        profit_loss = (
+            gross_profit_loss
+            - cost
+        )
 
         trades.append(
             BacktestTrade(
@@ -129,6 +162,16 @@ def run_feature_backtest(
         trades
     )
 
+    equity_curve = calculate_equity_curve(
+        trades=trades,
+        initial_balance=config.initial_balance,
+    )
+
+    final_balance = calculate_final_balance(
+        trades=trades,
+        initial_balance=config.initial_balance,
+    )
+
     return BacktestResult(
         total_trades=total_trades,
         winning_trades=winning_trades,
@@ -141,4 +184,7 @@ def run_feature_backtest(
         largest_loss=largest_loss,
         profit_factor=profit_factor,
         max_drawdown=max_drawdown,
+        initial_balance=config.initial_balance,
+        final_balance=final_balance,
+        equity_curve=equity_curve,
     )
