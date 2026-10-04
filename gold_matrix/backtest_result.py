@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional
+from typing import List, Optional
 
 
 @dataclass(frozen=True)
@@ -39,3 +39,8 @@ class BacktestResult:
     profit_factor: float = 0.0
 
     max_drawdown: float = 0.0
+
+    initial_balance: float = 0.0
+    final_balance: float = 0.0
+
+    equity_curve: List[float] = None
