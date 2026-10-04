@@ -1,6 +1,18 @@
-
 from data.market_series import MarketDataSeries
-from backtest_result import BacktestResult, BacktestTrade
+
+from backtest_result import (
+    BacktestResult,
+    BacktestTrade,
+)
+
+from backtest.metrics import (
+    calculate_average_profit,
+    calculate_average_loss,
+    calculate_largest_win,
+    calculate_largest_loss,
+    calculate_profit_factor,
+    calculate_max_drawdown,
+)
 
 
 def run_backtest(
@@ -75,17 +87,37 @@ def run_backtest(
         for trade in trades
     )
 
-    if total_trades > 0:
+    win_rate = (
+        winning_trades
+        / total_trades
+        * 100
+        if total_trades > 0
+        else 0.0
+    )
 
-        win_rate = (
-            winning_trades
-            / total_trades
-            * 100
-        )
+    average_profit = calculate_average_profit(
+        trades
+    )
 
-    else:
+    average_loss = calculate_average_loss(
+        trades
+    )
 
-        win_rate = 0.0
+    largest_win = calculate_largest_win(
+        trades
+    )
+
+    largest_loss = calculate_largest_loss(
+        trades
+    )
+
+    profit_factor = calculate_profit_factor(
+        trades
+    )
+
+    max_drawdown = calculate_max_drawdown(
+        trades
+    )
 
     return BacktestResult(
         total_trades=total_trades,
@@ -93,4 +125,10 @@ def run_backtest(
         losing_trades=losing_trades,
         total_profit_loss=total_profit_loss,
         win_rate=win_rate,
+        average_profit=average_profit,
+        average_loss=average_loss,
+        largest_win=largest_win,
+        largest_loss=largest_loss,
+        profit_factor=profit_factor,
+        max_drawdown=max_drawdown,
     )
