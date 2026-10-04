@@ -57,3 +57,6 @@ jobs:
 
       - name: Test Signal To Trade
         run: python gold_matrix/test_signal_to_trade.py 
+
+      - name: Test ID Generator
+        run: python gold_matrix/test_id_generator.py
