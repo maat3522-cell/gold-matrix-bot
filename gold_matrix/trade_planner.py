@@ -32,20 +32,32 @@ def build_trade_plan(
         )
     )
 
+    stop_loss_distance = (
+        stop_loss_points * context.asset.point_size
+    )
+
+    take_profit_distance = (
+        take_profit_points * context.asset.point_size
+    )
+
     if direction == "BUY":
+
         stop_loss = (
-            entry_price - stop_loss_points
+            entry_price - stop_loss_distance
         )
+
         take_profit = (
-            entry_price + take_profit_points
+            entry_price + take_profit_distance
         )
 
     elif direction == "SELL":
+
         stop_loss = (
-            entry_price + stop_loss_points
+            entry_price + stop_loss_distance
         )
+
         take_profit = (
-            entry_price - take_profit_points
+            entry_price - take_profit_distance
         )
 
     else:
