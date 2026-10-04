@@ -18,7 +18,10 @@ def main():
         )
     )
 
+    # =========================
     # XAUUSD
+    # =========================
+
     xau = get_asset("XAUUSD")
 
     xau_context = MarketContext(
@@ -39,24 +42,14 @@ def main():
     )
 
     print("XAUUSD")
+    print(f"Price decimals: {xau.price_decimals}")
     print(f"Entry: {xau_plan.entry_price}")
     print(f"SL: {xau_plan.stop_loss}")
     print(f"TP: {xau_plan.take_profit}")
     print(f"Size: {xau_plan.position_size}")
 
-    assert isclose(
-        xau_plan.stop_loss,
-        4429,
-        rel_tol=0,
-        abs_tol=1e-9,
-    )
-
-    assert isclose(
-        xau_plan.take_profit,
-        4432,
-        rel_tol=0,
-        abs_tol=1e-9,
-    )
+    assert xau_plan.stop_loss == 4429.0
+    assert xau_plan.take_profit == 4432.0
 
     assert isclose(
         xau_plan.position_size,
@@ -65,9 +58,21 @@ def main():
         abs_tol=1e-9,
     )
 
+    assert (
+        len(
+            str(xau_plan.stop_loss).split(".")[1]
+        )
+        <= xau.price_decimals
+    )
+
+    print("XAUUSD: PASSED")
+
     print()
 
+    # =========================
     # EURUSD
+    # =========================
+
     eur = get_asset("EURUSD")
 
     eur_context = MarketContext(
@@ -88,6 +93,7 @@ def main():
     )
 
     print("EURUSD")
+    print(f"Price decimals: {eur.price_decimals}")
     print(f"Entry: {eur_plan.entry_price}")
     print(f"SL: {eur_plan.stop_loss}")
     print(f"TP: {eur_plan.take_profit}")
@@ -114,9 +120,15 @@ def main():
         abs_tol=1e-9,
     )
 
-    print()
-    print("XAUUSD: PASSED")
+    assert (
+        len(
+            str(eur_plan.stop_loss).split(".")[1]
+        )
+        <= eur.price_decimals
+    )
+
     print("EURUSD: PASSED")
+
     print()
     print("ALL MULTI ASSET TESTS PASSED")
 
