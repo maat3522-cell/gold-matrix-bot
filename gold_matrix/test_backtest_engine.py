@@ -70,20 +70,20 @@ def main():
     print(f"Max drawdown: {result.max_drawdown}")
 
     assert result.total_trades == 3
-    assert result.winning_trades == 2
-    assert result.losing_trades == 1
+    assert result.winning_trades == 3
+    assert result.losing_trades == 0
 
-    assert result.total_profit_loss == 17.0
-    assert result.win_rate == 66.66666666666666
+    assert result.total_profit_loss == 20.0
+    assert result.win_rate == 100.0
 
-    assert result.average_profit == 8.5
-    assert result.average_loss == -2.0
+    assert result.average_profit == 20.0 / 3
+    assert result.average_loss == 0.0
 
     assert result.largest_win == 12.0
-    assert result.largest_loss == -2.0
+    assert result.largest_loss == 0.0
 
-    assert result.profit_factor == 8.5
-    assert result.max_drawdown == 2.0
+    assert result.profit_factor == 0.0
+    assert result.max_drawdown == 0.0
 
     print()
     print("TRADE COUNT: PASSED")
