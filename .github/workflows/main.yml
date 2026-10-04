@@ -60,3 +60,6 @@ jobs:
 
       - name: Test ID Generator
         run: python gold_matrix/test_id_generator.py
+
+      - name: Test Engine
+        run: python gold_matrix/test_engine.py
