@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from asset_registry import get_asset
 from data.market_data import MarketData
 from data.market_series import MarketDataSeries
 from backtest.strategy_runner import run_feature_backtest
@@ -8,6 +9,8 @@ from backtest.strategy_runner import run_feature_backtest
 def main():
     print("STRATEGY RUNNER TEST")
     print("-------------------")
+
+    asset = get_asset("XAUUSD")
 
     series = MarketDataSeries(
         data=[
@@ -54,6 +57,7 @@ def main():
         series=series,
         symbol="XAUUSD",
         timeframe="M5",
+        asset=asset,
     )
 
     print(f"Total trades: {result.total_trades}")
