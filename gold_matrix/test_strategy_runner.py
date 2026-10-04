@@ -1,9 +1,13 @@
 from datetime import datetime
 
 from assets import AssetProfile
+
 from backtest.strategy_runner import run_feature_backtest
+from backtest.config import BacktestConfig
+
 from data.market_data import MarketData
 from data.market_series import MarketDataSeries
+
 from strategy import DefaultStrategy
 
 
@@ -25,6 +29,14 @@ def main():
 
     strategy = DefaultStrategy(
         min_confidence=70
+    )
+
+    config = BacktestConfig(
+        initial_balance=10000.0,
+        commission_per_trade=1.0,
+        slippage_per_trade=1.0,
+        allow_long=True,
+        allow_short=True,
     )
 
     series = MarketDataSeries(
@@ -74,6 +86,7 @@ def main():
         timeframe="M5",
         asset=asset,
         strategy=strategy,
+        config=config,
     )
 
     print(f"Total trades: {result.total_trades}")
@@ -87,8 +100,12 @@ def main():
     print(f"Largest loss: {result.largest_loss}")
     print(f"Profit factor: {result.profit_factor}")
     print(f"Max drawdown: {result.max_drawdown}")
+    print(f"Initial balance: {result.initial_balance}")
+    print(f"Final balance: {result.final_balance}")
+    print(f"Equity curve: {result.equity_curve}")
 
     assert result.total_trades >= 0
+
     assert result.winning_trades >= 0
     assert result.losing_trades >= 0
 
@@ -109,6 +126,25 @@ def main():
     assert result.profit_factor >= 0.0
     assert result.max_drawdown >= 0.0
 
+    assert result.initial_balance == 10000.0
+
+    assert result.final_balance == (
+        result.initial_balance
+        + result.total_profit_loss
+    )
+
+    assert len(result.equity_curve) == (
+        result.total_trades + 1
+    )
+
+    assert result.equity_curve[0] == (
+        result.initial_balance
+    )
+
+    assert result.equity_curve[-1] == (
+        result.final_balance
+    )
+
     print()
     print("TRADE COUNT: PASSED")
     print("WIN/LOSS COUNT: PASSED")
@@ -119,6 +155,9 @@ def main():
     print("LARGEST LOSS: PASSED")
     print("PROFIT FACTOR: PASSED")
     print("MAX DRAWDOWN: PASSED")
+    print("INITIAL BALANCE: PASSED")
+    print("FINAL BALANCE: PASSED")
+    print("EQUITY CURVE: PASSED")
 
     print()
     print("ALL STRATEGY RUNNER TESTS PASSED")
