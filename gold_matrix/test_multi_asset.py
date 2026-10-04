@@ -1,3 +1,5 @@
+from math import isclose
+
 from asset_registry import get_asset
 from market import MarketContext
 from risk_manager import RiskLimits, RiskManager
@@ -42,9 +44,26 @@ def main():
     print(f"TP: {xau_plan.take_profit}")
     print(f"Size: {xau_plan.position_size}")
 
-    assert xau_plan.stop_loss == 4429
-    assert xau_plan.take_profit == 4432
-    assert xau_plan.position_size == 1.0
+    assert isclose(
+        xau_plan.stop_loss,
+        4429,
+        rel_tol=0,
+        abs_tol=1e-9,
+    )
+
+    assert isclose(
+        xau_plan.take_profit,
+        4432,
+        rel_tol=0,
+        abs_tol=1e-9,
+    )
+
+    assert isclose(
+        xau_plan.position_size,
+        1.0,
+        rel_tol=0,
+        abs_tol=1e-9,
+    )
 
     print()
 
@@ -74,9 +93,26 @@ def main():
     print(f"TP: {eur_plan.take_profit}")
     print(f"Size: {eur_plan.position_size}")
 
-    assert eur_plan.stop_loss == 1.099
-    assert eur_plan.take_profit == 1.102
-    assert eur_plan.position_size == 1.0
+    assert isclose(
+        eur_plan.stop_loss,
+        1.099,
+        rel_tol=0,
+        abs_tol=1e-9,
+    )
+
+    assert isclose(
+        eur_plan.take_profit,
+        1.102,
+        rel_tol=0,
+        abs_tol=1e-9,
+    )
+
+    assert isclose(
+        eur_plan.position_size,
+        1.0,
+        rel_tol=0,
+        abs_tol=1e-9,
+    )
 
     print()
     print("XAUUSD: PASSED")
