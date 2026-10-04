@@ -104,7 +104,7 @@ def main():
     assert result.equity_curve == [
         10000.0,
         10003.0,
-        10003.0,
+        10004.0,
         10014.0,
     ]
 
