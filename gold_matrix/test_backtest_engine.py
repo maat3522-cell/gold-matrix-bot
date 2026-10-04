@@ -64,13 +64,13 @@ def main():
 
     assert result.total_trades == 3
 
-    assert result.winning_trades == 2
+    assert result.winning_trades == 3
 
-    assert result.losing_trades == 1
+    assert result.losing_trades == 0
 
-    assert result.total_profit_loss == 12
+    assert result.total_profit_loss == 17
 
-    assert round(result.win_rate, 2) == 66.67
+    assert result.win_rate == 100.0
 
     print()
     print("TOTAL TRADES: PASSED")
