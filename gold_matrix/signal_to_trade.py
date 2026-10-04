@@ -29,6 +29,11 @@ def build_trade_plan_from_signal(
             "Signal symbol does not match market context asset."
         )
 
+    if signal.asset_type != context.asset.asset_type:
+        raise ValueError(
+            "Signal asset type does not match market context asset."
+        )
+
     if signal.timeframe != context.timeframe:
         raise ValueError(
             "Signal timeframe does not match market context timeframe."
@@ -39,7 +44,7 @@ def build_trade_plan_from_signal(
             "Signal price must be greater than zero."
         )
 
-    return build_trade_plan(
+    plan = build_trade_plan(
         context=context,
         direction=signal.signal,
         entry_price=signal.price,
@@ -48,4 +53,17 @@ def build_trade_plan_from_signal(
         account_balance=account_balance,
         risk_percent=risk_percent,
         risk_manager=risk_manager,
+    )
+
+    return TradePlan(
+        symbol=plan.symbol,
+        timeframe=plan.timeframe,
+        direction=plan.direction,
+        entry_price=plan.entry_price,
+        stop_loss=plan.stop_loss,
+        take_profit=plan.take_profit,
+        risk_percent=plan.risk_percent,
+        position_size=plan.position_size,
+        strategy=signal.strategy,
+        signal_id=signal.signal_id,
     )
