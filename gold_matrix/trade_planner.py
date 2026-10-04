@@ -5,6 +5,10 @@ from position_sizing import (
     PositionSizeRequest,
     calculate_position_size,
 )
+from price_utils import (
+    normalize_price,
+    points_to_price_distance,
+)
 
 
 def build_trade_plan(
@@ -23,6 +27,11 @@ def build_trade_plan(
             "Risk percent exceeds allowed risk limits."
         )
 
+    entry_price = normalize_price(
+        entry_price,
+        context.asset,
+    )
+
     position_size = calculate_position_size(
         PositionSizeRequest(
             account_balance=account_balance,
@@ -32,14 +41,14 @@ def build_trade_plan(
         )
     )
 
-    stop_loss_distance = (
-        stop_loss_points
-        * context.asset.point_size
+    stop_loss_distance = points_to_price_distance(
+        stop_loss_points,
+        context.asset,
     )
 
-    take_profit_distance = (
-        take_profit_points
-        * context.asset.point_size
+    take_profit_distance = points_to_price_distance(
+        take_profit_points,
+        context.asset,
     )
 
     if direction == "BUY":
@@ -67,16 +76,14 @@ def build_trade_plan(
             f"Unsupported direction: {direction}"
         )
 
-    decimals = context.asset.price_decimals
-
-    stop_loss = round(
+    stop_loss = normalize_price(
         stop_loss,
-        decimals,
+        context.asset,
     )
 
-    take_profit = round(
+    take_profit = normalize_price(
         take_profit,
-        decimals,
+        context.asset,
     )
 
     return TradePlan(
