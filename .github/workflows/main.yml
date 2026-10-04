@@ -63,3 +63,6 @@ jobs:
 
       - name: Test Engine
         run: python gold_matrix/test_engine.py
+
+      - name: Test Market Data
+        run: python gold_matrix/test_market_data.py  
