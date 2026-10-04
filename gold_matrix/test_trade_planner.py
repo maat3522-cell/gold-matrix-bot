@@ -35,7 +35,6 @@ def main():
         take_profit_points=20,
         account_balance=10000,
         risk_percent=1.0,
-        point_value=1.0,
         risk_manager=risk_manager,
     )
 
@@ -47,7 +46,6 @@ def main():
         take_profit_points=20,
         account_balance=10000,
         risk_percent=1.0,
-        point_value=1.0,
         risk_manager=risk_manager,
     )
 
@@ -88,7 +86,6 @@ def main():
             take_profit_points=20,
             account_balance=10000,
             risk_percent=2.0,
-            point_value=1.0,
             risk_manager=risk_manager,
         )
 
