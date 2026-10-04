@@ -31,8 +31,8 @@ def main():
         context=context,
         direction="BUY",
         entry_price=4430,
-        stop_loss_points=10,
-        take_profit_points=20,
+        stop_loss_points=100,
+        take_profit_points=200,
         account_balance=10000,
         risk_percent=1.0,
         risk_manager=risk_manager,
@@ -42,8 +42,8 @@ def main():
         context=context,
         direction="SELL",
         entry_price=4430,
-        stop_loss_points=10,
-        take_profit_points=20,
+        stop_loss_points=100,
+        take_profit_points=200,
         account_balance=10000,
         risk_percent=1.0,
         risk_manager=risk_manager,
@@ -64,15 +64,15 @@ def main():
 
     assert buy_plan.direction == "BUY"
     assert buy_plan.entry_price == 4430
-    assert buy_plan.stop_loss == 4420
-    assert buy_plan.take_profit == 4450
-    assert buy_plan.position_size == 10.0
+    assert buy_plan.stop_loss == 4429
+    assert buy_plan.take_profit == 4432
+    assert buy_plan.position_size == 1.0
 
     assert sell_plan.direction == "SELL"
     assert sell_plan.entry_price == 4430
-    assert sell_plan.stop_loss == 4440
-    assert sell_plan.take_profit == 4410
-    assert sell_plan.position_size == 10.0
+    assert sell_plan.stop_loss == 4431
+    assert sell_plan.take_profit == 4428
+    assert sell_plan.position_size == 1.0
 
     print()
     print("Testing invalid risk...")
@@ -82,8 +82,8 @@ def main():
             context=context,
             direction="BUY",
             entry_price=4430,
-            stop_loss_points=10,
-            take_profit_points=20,
+            stop_loss_points=100,
+            take_profit_points=200,
             account_balance=10000,
             risk_percent=2.0,
             risk_manager=risk_manager,
