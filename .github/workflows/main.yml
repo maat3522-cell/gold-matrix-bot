@@ -73,4 +73,7 @@ jobs:
       - name: Test Normalizer
         run: python gold_matrix/test_normalizer.py
 
+      - name: Test Trend
+        run: python gold_matrix/test_trend.py
+
         
