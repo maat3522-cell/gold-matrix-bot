@@ -91,4 +91,7 @@ jobs:
       - name: Test Backtest Result
         run: python gold_matrix/test_backtest_result.py
 
+      - name: Test Backtest Engine
+        run: python gold_matrix/test_backtest_engine.py
+
         
