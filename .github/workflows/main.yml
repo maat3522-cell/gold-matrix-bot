@@ -51,3 +51,6 @@ jobs:
 
       - name: Test Price Utils
         run: python gold_matrix/test_price_utils.py
+
+      - name: Test Trade Plan Validator
+        run: python gold_matrix/test_trade_plan_validator.py     
