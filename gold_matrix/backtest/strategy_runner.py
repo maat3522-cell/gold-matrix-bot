@@ -2,7 +2,6 @@ from data.market_series import MarketDataSeries
 from backtest_result import BacktestResult, BacktestTrade
 from features.context_builder import build_market_context
 from scoring import calculate_score
-from strategy_factory import create_strategy
 
 
 def run_feature_backtest(
@@ -10,6 +9,7 @@ def run_feature_backtest(
     symbol: str,
     timeframe: str,
     asset,
+    strategy,
 ) -> BacktestResult:
 
     trades = []
@@ -27,8 +27,6 @@ def run_feature_backtest(
         )
 
         score, _ = calculate_score(context)
-
-        strategy = create_strategy("default")
 
         decision = strategy.evaluate(score)
 
