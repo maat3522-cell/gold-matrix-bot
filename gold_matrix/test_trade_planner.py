@@ -55,22 +55,26 @@ def main():
     print(f"Entry: {buy_plan.entry_price}")
     print(f"SL: {buy_plan.stop_loss}")
     print(f"TP: {buy_plan.take_profit}")
+    print(f"Position Size: {buy_plan.position_size}")
 
     print()
     print("SELL PLAN")
     print(f"Entry: {sell_plan.entry_price}")
     print(f"SL: {sell_plan.stop_loss}")
     print(f"TP: {sell_plan.take_profit}")
+    print(f"Position Size: {sell_plan.position_size}")
 
     assert buy_plan.direction == "BUY"
     assert buy_plan.entry_price == 4430
     assert buy_plan.stop_loss == 4420
     assert buy_plan.take_profit == 4450
+    assert buy_plan.position_size == 10.0
 
     assert sell_plan.direction == "SELL"
     assert sell_plan.entry_price == 4430
     assert sell_plan.stop_loss == 4440
     assert sell_plan.take_profit == 4410
+    assert sell_plan.position_size == 10.0
 
     print()
     print("Testing invalid risk...")
