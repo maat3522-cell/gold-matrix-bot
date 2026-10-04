@@ -68,4 +68,9 @@ jobs:
         run: python gold_matrix/test_market_data.py  
 
       - name: Test Market Series
-        run: python gold_matrix/test_market_series.py      
+        run: python gold_matrix/test_market_series.py 
+
+      - name: Test Normalizer
+        run: python gold_matrix/test_normalizer.py
+
+        
