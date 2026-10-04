@@ -1,9 +1,11 @@
 from signal import Signal
 
+from asset_registry import get_asset
 from market import MarketContext
 from risk_manager import RiskManager
 from trade_plan import TradePlan
 from trade_planner import build_trade_plan
+from id_generator import generate_trade_id
 
 
 def build_trade_plan_from_signal(
@@ -66,4 +68,5 @@ def build_trade_plan_from_signal(
         position_size=plan.position_size,
         strategy=signal.strategy,
         signal_id=signal.signal_id,
+        trade_id=generate_trade_id(),
     )
