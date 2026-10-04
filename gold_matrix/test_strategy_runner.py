@@ -4,6 +4,7 @@ from asset_registry import get_asset
 from data.market_data import MarketData
 from data.market_series import MarketDataSeries
 from backtest.strategy_runner import run_feature_backtest
+from strategy_factory import create_strategy
 
 
 def main():
@@ -11,6 +12,8 @@ def main():
     print("-------------------")
 
     asset = get_asset("XAUUSD")
+
+    strategy = create_strategy("default")
 
     series = MarketDataSeries(
         data=[
@@ -58,6 +61,7 @@ def main():
         symbol="XAUUSD",
         timeframe="M5",
         asset=asset,
+        strategy=strategy,
     )
 
     print(f"Total trades: {result.total_trades}")
