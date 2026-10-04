@@ -61,6 +61,7 @@ def main():
     print(f"SL: {buy_plan.stop_loss}")
     print(f"TP: {buy_plan.take_profit}")
     print(f"Size: {buy_plan.position_size}")
+    print(f"Trade ID: {buy_plan.trade_id}")
     print(f"Trade Plan Signal ID: {buy_plan.signal_id}")
     print(f"Trade Plan Strategy: {buy_plan.strategy}")
 
@@ -71,6 +72,9 @@ def main():
     assert buy_plan.position_size == 1.0
     assert buy_plan.strategy == "default"
     assert buy_plan.signal_id == "SIG-TEST-BUY-001"
+    assert buy_plan.trade_id is not None
+    assert buy_plan.trade_id.startswith("TRD-")
+    assert len(buy_plan.trade_id) == 16
 
     print("BUY SIGNAL: PASSED")
 
@@ -108,6 +112,7 @@ def main():
     print(f"SL: {sell_plan.stop_loss}")
     print(f"TP: {sell_plan.take_profit}")
     print(f"Size: {sell_plan.position_size}")
+    print(f"Trade ID: {sell_plan.trade_id}")
     print(f"Trade Plan Signal ID: {sell_plan.signal_id}")
     print(f"Trade Plan Strategy: {sell_plan.strategy}")
 
@@ -118,8 +123,14 @@ def main():
     assert sell_plan.position_size == 1.0
     assert sell_plan.strategy == "default"
     assert sell_plan.signal_id == "SIG-TEST-SELL-001"
+    assert sell_plan.trade_id is not None
+    assert sell_plan.trade_id.startswith("TRD-")
+    assert len(sell_plan.trade_id) == 16
+
+    assert buy_plan.trade_id != sell_plan.trade_id
 
     print("SELL SIGNAL: PASSED")
+    print("TRADE ID UNIQUENESS: PASSED")
 
     print()
 
