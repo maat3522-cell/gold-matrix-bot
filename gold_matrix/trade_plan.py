@@ -19,3 +19,4 @@ class TradePlan:
 
     strategy: Optional[str] = None
     signal_id: Optional[str] = None
+    trade_id: Optional[str] = None
