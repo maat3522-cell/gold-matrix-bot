@@ -78,6 +78,9 @@ def main():
     print(f"Largest loss: {result.largest_loss}")
     print(f"Profit factor: {result.profit_factor}")
     print(f"Max drawdown: {result.max_drawdown}")
+    print(f"Initial balance: {result.initial_balance}")
+    print(f"Final balance: {result.final_balance}")
+    print(f"Equity curve: {result.equity_curve}")
 
     assert result.total_trades == 3
     assert result.winning_trades == 3
@@ -95,6 +98,16 @@ def main():
     assert result.profit_factor == 0.0
     assert result.max_drawdown == 0.0
 
+    assert result.initial_balance == 10000.0
+    assert result.final_balance == 10014.0
+
+    assert result.equity_curve == [
+        10000.0,
+        10003.0,
+        10003.0,
+        10014.0,
+    ]
+
     print()
     print("TRADE COUNT: PASSED")
     print("WIN/LOSS COUNT: PASSED")
@@ -107,6 +120,9 @@ def main():
     print("LARGEST LOSS: PASSED")
     print("PROFIT FACTOR: PASSED")
     print("MAX DRAWDOWN: PASSED")
+    print("INITIAL BALANCE: PASSED")
+    print("FINAL BALANCE: PASSED")
+    print("EQUITY CURVE: PASSED")
 
     print()
     print("ALL BACKTEST ENGINE TESTS PASSED")
