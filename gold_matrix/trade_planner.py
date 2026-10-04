@@ -62,4 +62,5 @@ def build_trade_plan(
         stop_loss=stop_loss,
         take_profit=take_profit,
         risk_percent=risk_percent,
+        position_size=position_size,
     )
