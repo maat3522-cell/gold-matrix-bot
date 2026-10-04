@@ -42,3 +42,6 @@ jobs:
 
       - name: Test Position Sizing
         run: python gold_matrix/test_position_sizing.py
+
+      - name: Test Trade Planner
+        run: python gold_matrix/test_trade_planner.py
