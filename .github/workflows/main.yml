@@ -85,4 +85,7 @@ jobs:
       - name: Test Market Context
         run: python gold_matrix/test_market_context.py
 
+      - name: Test Context Builder
+        run: python gold_matrix/test_context_builder.py
+
         
