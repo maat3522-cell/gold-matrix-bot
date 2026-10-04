@@ -1,3 +1,4 @@
+from asset_registry import get_asset
 from position_sizing import (
     PositionSizeRequest,
     calculate_position_size,
@@ -8,22 +9,25 @@ def main():
     print("POSITION SIZING TEST")
     print("-------------------")
 
+    asset = get_asset("XAUUSD")
+
     request = PositionSizeRequest(
         account_balance=10000,
         risk_percent=1.0,
-        stop_loss_points=100,
-        point_value=1.0,
+        stop_loss_points=10,
+        asset=asset,
     )
 
     size = calculate_position_size(request)
 
+    print(f"Asset: {asset.symbol}")
     print(f"Account balance: {request.account_balance}")
     print(f"Risk: {request.risk_percent}%")
     print(f"Stop loss points: {request.stop_loss_points}")
-    print(f"Point value: {request.point_value}")
+    print(f"Tick value: {asset.tick_value}")
     print(f"Calculated position size: {size}")
 
-    assert size == 1.0
+    assert size == 10.0
 
     print()
     print("Testing invalid inputs...")
@@ -33,8 +37,8 @@ def main():
             PositionSizeRequest(
                 account_balance=0,
                 risk_percent=1.0,
-                stop_loss_points=100,
-                point_value=1.0,
+                stop_loss_points=10,
+                asset=asset,
             )
         )
         raise AssertionError(
@@ -49,7 +53,7 @@ def main():
                 account_balance=10000,
                 risk_percent=1.0,
                 stop_loss_points=0,
-                point_value=1.0,
+                asset=asset,
             )
         )
         raise AssertionError(
