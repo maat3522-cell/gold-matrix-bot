@@ -1,7 +1,11 @@
 from data.csv_loader import load_csv_market_data
+
 from assets import AssetProfile
+
 from strategy import DefaultStrategy
+
 from backtest.config import BacktestConfig
+
 from backtest.strategy_runner import run_feature_backtest
 
 
@@ -34,8 +38,8 @@ def main():
 
     config = BacktestConfig(
         initial_balance=10000.0,
-        commission_per_trade=1.0,
-        slippage_per_trade=1.0,
+        commission_per_trade=0.0,
+        slippage_per_trade=0.0,
         stop_loss_points=150.0,
         take_profit_points=300.0,
     )
@@ -50,22 +54,26 @@ def main():
     )
 
     buy_trades = [
-        trade for trade in result.trades
+        trade
+        for trade in result.trades
         if trade.direction == "BUY"
     ]
 
     sell_trades = [
-        trade for trade in result.trades
+        trade
+        for trade in result.trades
         if trade.direction == "SELL"
     ]
 
     buy_wins = [
-        trade for trade in buy_trades
+        trade
+        for trade in buy_trades
         if trade.profit_loss > 0
     ]
 
     sell_wins = [
-        trade for trade in sell_trades
+        trade
+        for trade in sell_trades
         if trade.profit_loss > 0
     ]
 
@@ -90,6 +98,7 @@ def main():
     print(f"Win rate: {result.win_rate}%")
     print(f"Profit factor: {result.profit_factor}")
     print(f"Max drawdown: {result.max_drawdown}")
+    print(f"Initial balance: {result.initial_balance}")
     print(f"Final balance: {result.final_balance}")
 
     print()
