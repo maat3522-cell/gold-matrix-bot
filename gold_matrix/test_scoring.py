@@ -53,8 +53,8 @@ def main():
     print(f"Neutral score: {neutral_score}")
 
     assert bullish_score == 80
-    assert bearish_score == -60
-    assert neutral_score == 10
+    assert bearish_score == -80
+    assert neutral_score == 0
 
     assert len(bullish_rules) == 3
     assert len(bearish_rules) == 3
