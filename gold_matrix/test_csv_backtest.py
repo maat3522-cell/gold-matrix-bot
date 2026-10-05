@@ -1,5 +1,5 @@
 from data.csv_loader import load_csv_market_data
-from assets import get_asset
+from assets import AssetProfile
 from strategy import DefaultStrategy
 from backtest.config import BacktestConfig
 from backtest.strategy_runner import run_feature_backtest
@@ -16,7 +16,17 @@ def main():
 
     print(f"Loaded candles: {len(series.data)}")
 
-    asset = get_asset("XAUUSD")
+    asset = AssetProfile(
+        symbol="XAUUSD",
+        asset_type="metal",
+        price_decimals=2,
+        point_size=0.01,
+        min_volume=0.01,
+        max_volume=100.0,
+        volume_step=0.01,
+        tick_size=0.01,
+        tick_value=1.0,
+    )
 
     strategy = DefaultStrategy(
         min_confidence=70
