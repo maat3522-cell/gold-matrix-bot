@@ -69,15 +69,15 @@ def main():
         if trade.profit_loss > 0
     ]
 
-    tp_trades = [
-        trade for trade in result.trades
-        if trade.exit_reason == "TP"
-    ]
+    buy_profit = sum(
+        trade.profit_loss
+        for trade in buy_trades
+    )
 
-    sl_trades = [
-        trade for trade in result.trades
-        if trade.exit_reason == "SL"
-    ]
+    sell_profit = sum(
+        trade.profit_loss
+        for trade in sell_trades
+    )
 
     print()
     print("RESULT")
@@ -90,25 +90,37 @@ def main():
     print(f"Win rate: {result.win_rate}%")
     print(f"Profit factor: {result.profit_factor}")
     print(f"Max drawdown: {result.max_drawdown}")
-    print(f"Initial balance: {result.initial_balance}")
     print(f"Final balance: {result.final_balance}")
 
     print()
-    print("DIRECTION")
+    print("BUY ANALYSIS")
     print("--------------------")
 
     print(f"BUY trades: {len(buy_trades)}")
     print(f"BUY wins: {len(buy_wins)}")
 
+    if buy_trades:
+        print(
+            f"BUY win rate: "
+            f"{len(buy_wins) / len(buy_trades) * 100}%"
+        )
+
+    print(f"BUY P/L: {buy_profit}")
+
+    print()
+    print("SELL ANALYSIS")
+    print("--------------------")
+
     print(f"SELL trades: {len(sell_trades)}")
     print(f"SELL wins: {len(sell_wins)}")
 
-    print()
-    print("EXIT REASONS")
-    print("--------------------")
+    if sell_trades:
+        print(
+            f"SELL win rate: "
+            f"{len(sell_wins) / len(sell_trades) * 100}%"
+        )
 
-    print(f"TP: {len(tp_trades)}")
-    print(f"SL: {len(sl_trades)}")
+    print(f"SELL P/L: {sell_profit}")
 
     print()
     print("CSV BACKTEST COMPLETED")
