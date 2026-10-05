@@ -17,6 +17,8 @@ class BacktestTrade:
 
     profit_loss: float = 0.0
 
+    exit_reason: str = "UNKNOWN"
+
     signal_id: Optional[str] = None
 
 
