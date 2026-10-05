@@ -115,6 +115,8 @@ def run_feature_backtest(
 
         exit_price = entry_price
 
+        exit_reason = "UNKNOWN"
+
         trade_closed = False
 
         exit_index = index + 1
@@ -135,16 +137,19 @@ def run_feature_backtest(
 
                 if stop_hit and take_profit_hit:
                     exit_price = stop_loss
+                    exit_reason = "SL"
                     trade_closed = True
                     break
 
                 if stop_hit:
                     exit_price = stop_loss
+                    exit_reason = "SL"
                     trade_closed = True
                     break
 
                 if take_profit_hit:
                     exit_price = take_profit
+                    exit_reason = "TP"
                     trade_closed = True
                     break
 
@@ -160,16 +165,19 @@ def run_feature_backtest(
 
                 if stop_hit and take_profit_hit:
                     exit_price = stop_loss
+                    exit_reason = "SL"
                     trade_closed = True
                     break
 
                 if stop_hit:
                     exit_price = stop_loss
+                    exit_reason = "SL"
                     trade_closed = True
                     break
 
                 if take_profit_hit:
                     exit_price = take_profit
+                    exit_reason = "TP"
                     trade_closed = True
                     break
 
@@ -178,7 +186,10 @@ def run_feature_backtest(
         if not trade_closed:
 
             exit_price = series.data[-1].close
+
             exit_index = len(series.data) - 1
+
+            exit_reason = "END_OF_DATA"
 
         if decision.signal == "BUY":
 
@@ -214,6 +225,7 @@ def run_feature_backtest(
                 stop_loss=stop_loss,
                 take_profit=take_profit,
                 profit_loss=profit_loss,
+                exit_reason=exit_reason,
             )
         )
 
