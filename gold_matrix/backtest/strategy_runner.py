@@ -39,6 +39,16 @@ def run_feature_backtest(
 
     trades = []
 
+    stop_loss_distance = (
+        config.stop_loss_points
+        * asset.point_size
+    )
+
+    take_profit_distance = (
+        config.take_profit_points
+        * asset.point_size
+    )
+
     for index in range(1, len(series.data)):
 
         current_series = MarketDataSeries(
@@ -70,24 +80,52 @@ def run_feature_backtest(
         ):
             continue
 
-        previous_candle = series.data[index - 1]
         current_candle = series.data[index]
 
-        entry_price = previous_candle.close
-        exit_price = current_candle.close
+        entry_price = current_candle.close
 
         if decision.signal == "BUY":
+            stop_loss = (
+                entry_price
+                - stop_loss_distance
+            )
+
+            take_profit = (
+                entry_price
+                + take_profit_distance
+            )
+
+            if current_candle.low <= stop_loss:
+                exit_price = stop_loss
+            elif current_candle.high >= take_profit:
+                exit_price = take_profit
+            else:
+                exit_price = current_candle.close
 
             gross_profit_loss = (
-                exit_price
-                - entry_price
+                exit_price - entry_price
             )
 
         else:
+            stop_loss = (
+                entry_price
+                + stop_loss_distance
+            )
+
+            take_profit = (
+                entry_price
+                - take_profit_distance
+            )
+
+            if current_candle.high >= stop_loss:
+                exit_price = stop_loss
+            elif current_candle.low <= take_profit:
+                exit_price = take_profit
+            else:
+                exit_price = current_candle.close
 
             gross_profit_loss = (
-                entry_price
-                - exit_price
+                entry_price - exit_price
             )
 
         cost = (
@@ -96,8 +134,7 @@ def run_feature_backtest(
         )
 
         profit_loss = (
-            gross_profit_loss
-            - cost
+            gross_profit_loss - cost
         )
 
         trades.append(
@@ -138,29 +175,12 @@ def run_feature_backtest(
         else 0.0
     )
 
-    average_profit = calculate_average_profit(
-        trades
-    )
-
-    average_loss = calculate_average_loss(
-        trades
-    )
-
-    largest_win = calculate_largest_win(
-        trades
-    )
-
-    largest_loss = calculate_largest_loss(
-        trades
-    )
-
-    profit_factor = calculate_profit_factor(
-        trades
-    )
-
-    max_drawdown = calculate_max_drawdown(
-        trades
-    )
+    average_profit = calculate_average_profit(trades)
+    average_loss = calculate_average_loss(trades)
+    largest_win = calculate_largest_win(trades)
+    largest_loss = calculate_largest_loss(trades)
+    profit_factor = calculate_profit_factor(trades)
+    max_drawdown = calculate_max_drawdown(trades)
 
     equity_curve = calculate_equity_curve(
         trades=trades,
