@@ -63,20 +63,36 @@ def momentum_rule(trend, momentum):
     }
 
 
-def volatility_rule(volatility):
-    if volatility == "NORMAL":
+def volatility_rule(trend, volatility):
+    if volatility != "NORMAL":
+        return {
+            "name": "volatility",
+            "score": 0,
+            "status": "NEUTRAL",
+            "reason": "Volatility is outside preferred range",
+        }
+
+    if trend == "BULLISH":
         return {
             "name": "volatility",
             "score": VOLATILITY_SCORE,
             "status": "PASS",
-            "reason": "Volatility is within normal range",
+            "reason": "Normal volatility for bullish setup",
+        }
+
+    if trend == "BEARISH":
+        return {
+            "name": "volatility",
+            "score": -VOLATILITY_SCORE,
+            "status": "PASS",
+            "reason": "Normal volatility for bearish setup",
         }
 
     return {
         "name": "volatility",
         "score": 0,
         "status": "NEUTRAL",
-        "reason": "Volatility is outside preferred range",
+        "reason": "Normal volatility without directional trend",
     }
 
 
@@ -84,5 +100,8 @@ def run_rules(trend, momentum, volatility):
     return {
         "trend": trend_rule(trend),
         "momentum": momentum_rule(trend, momentum),
-        "volatility": volatility_rule(volatility),
+        "volatility": volatility_rule(
+            trend,
+            volatility,
+        ),
     }
