@@ -109,4 +109,7 @@ jobs:
       - name: Test Backtest Executor
         run: python gold_matrix/test_backtest_executor.py
 
+      - name: Test Gold Backtest
+        run: python gold_matrix/test_gold_backtest.py
+
         
