@@ -12,3 +12,7 @@ class BacktestConfig:
     allow_long: bool = True
 
     allow_short: bool = True
+
+    stop_loss_points: float = 150.0
+
+    take_profit_points: float = 300.0
