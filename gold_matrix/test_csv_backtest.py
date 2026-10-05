@@ -49,6 +49,36 @@ def main():
         config=config,
     )
 
+    buy_trades = [
+        trade for trade in result.trades
+        if trade.direction == "BUY"
+    ]
+
+    sell_trades = [
+        trade for trade in result.trades
+        if trade.direction == "SELL"
+    ]
+
+    buy_wins = [
+        trade for trade in buy_trades
+        if trade.profit_loss > 0
+    ]
+
+    sell_wins = [
+        trade for trade in sell_trades
+        if trade.profit_loss > 0
+    ]
+
+    tp_trades = [
+        trade for trade in result.trades
+        if trade.exit_reason == "TP"
+    ]
+
+    sl_trades = [
+        trade for trade in result.trades
+        if trade.exit_reason == "SL"
+    ]
+
     print()
     print("RESULT")
     print("--------------------")
@@ -62,6 +92,23 @@ def main():
     print(f"Max drawdown: {result.max_drawdown}")
     print(f"Initial balance: {result.initial_balance}")
     print(f"Final balance: {result.final_balance}")
+
+    print()
+    print("DIRECTION")
+    print("--------------------")
+
+    print(f"BUY trades: {len(buy_trades)}")
+    print(f"BUY wins: {len(buy_wins)}")
+
+    print(f"SELL trades: {len(sell_trades)}")
+    print(f"SELL wins: {len(sell_wins)}")
+
+    print()
+    print("EXIT REASONS")
+    print("--------------------")
+
+    print(f"TP: {len(tp_trades)}")
+    print(f"SL: {len(sl_trades)}")
 
     print()
     print("CSV BACKTEST COMPLETED")
