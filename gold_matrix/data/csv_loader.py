@@ -21,9 +21,7 @@ def load_csv_market_data(
         reader = csv.DictReader(file)
 
         required_columns = {
-            "timestamp",
-            "symbol",
-            "timeframe",
+            "datetime",
             "open",
             "high",
             "low",
@@ -40,14 +38,20 @@ def load_csv_market_data(
 
         for row in reader:
 
+            timestamp_text = (
+                row["datetime"]
+                .replace("Z", "+00:00")
+            )
+
+            timestamp = datetime.fromisoformat(
+                timestamp_text
+            )
+
             data.append(
                 MarketData(
-                    symbol=row["symbol"],
-                    timeframe=row["timeframe"],
-                    timestamp=datetime.strptime(
-                        row["timestamp"],
-                        "%Y-%m-%d %H:%M:%S",
-                    ),
+                    symbol="XAUUSD",
+                    timeframe="M5",
+                    timestamp=timestamp,
                     open=float(row["open"]),
                     high=float(row["high"]),
                     low=float(row["low"]),
