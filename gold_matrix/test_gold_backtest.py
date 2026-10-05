@@ -184,12 +184,20 @@ def main():
         if trade.exit_reason == "END_OF_DATA"
     )
 
+    unknown_count = sum(
+        1
+        for trade in result.trades
+        if trade.exit_reason == "UNKNOWN"
+    )
+
     print()
     print("EXIT REASONS")
     print("--------------------")
+
     print(f"TP: {tp_count}")
     print(f"SL: {sl_count}")
     print(f"END_OF_DATA: {end_count}")
+    print(f"UNKNOWN: {unknown_count}")
 
     print()
     print("BACKTEST COMPLETED")
