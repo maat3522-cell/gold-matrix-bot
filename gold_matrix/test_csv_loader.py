@@ -31,15 +31,11 @@ def main():
     assert len(series.data) == 5
 
     assert series.data[0].symbol == "XAUUSD"
-
     assert series.data[0].timeframe == "M5"
 
     assert series.data[0].open == 4430.0
-
     assert series.data[0].high == 4433.0
-
     assert series.data[0].low == 4428.0
-
     assert series.data[0].close == 4432.0
 
     assert series.data[-1].close == 4444.0
@@ -49,6 +45,7 @@ def main():
     print("SYMBOL: PASSED")
     print("TIMEFRAME: PASSED")
     print("PRICE DATA: PASSED")
+    print("DATETIME FORMAT: PASSED")
     print()
     print("ALL CSV LOADER TESTS PASSED")
 
