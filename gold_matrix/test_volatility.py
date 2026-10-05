@@ -5,6 +5,30 @@ from data.market_series import MarketDataSeries
 from features.volatility import detect_volatility
 
 
+def make_candle(
+    minute,
+    open_price,
+    high,
+    low,
+    close,
+):
+    return MarketData(
+        symbol="XAUUSD",
+        timeframe="M5",
+        timestamp=datetime(
+            2026,
+            10,
+            4,
+            10,
+            minute,
+        ),
+        open=open_price,
+        high=high,
+        low=low,
+        close=close,
+    )
+
+
 def main():
     print("VOLATILITY FEATURE TEST")
     print("-------------------")
@@ -12,24 +36,14 @@ def main():
     # HIGH VOLATILITY
     high_series = MarketDataSeries(
         data=[
-            MarketData(
-                symbol="XAUUSD",
-                timeframe="M5",
-                timestamp=datetime(2026, 10, 4, 10, 20),
-                open=4425,
-                high=4428,
-                low=4424,
-                close=4427,
-            ),
-            MarketData(
-                symbol="XAUUSD",
-                timeframe="M5",
-                timestamp=datetime(2026, 10, 4, 10, 25),
-                open=4427,
-                high=4435,
-                low=4423,
-                close=4431,
-            ),
+            make_candle(0, 4430, 4432, 4428, 4431),
+            make_candle(5, 4431, 4433, 4429, 4432),
+            make_candle(10, 4432, 4434, 4430, 4433),
+            make_candle(15, 4433, 4435, 4431, 4434),
+            make_candle(20, 4434, 4436, 4432, 4435),
+
+            # آخرین کندل بسیار بزرگ‌تر
+            make_candle(25, 4435, 4445, 4425, 4442),
         ]
     )
 
@@ -48,24 +62,14 @@ def main():
     # LOW VOLATILITY
     low_series = MarketDataSeries(
         data=[
-            MarketData(
-                symbol="XAUUSD",
-                timeframe="M5",
-                timestamp=datetime(2026, 10, 4, 10, 20),
-                open=4430,
-                high=4435,
-                low=4425,
-                close=4430,
-            ),
-            MarketData(
-                symbol="XAUUSD",
-                timeframe="M5",
-                timestamp=datetime(2026, 10, 4, 10, 25),
-                open=4430,
-                high=4432,
-                low=4428,
-                close=4431,
-            ),
+            make_candle(0, 4430, 4436, 4424, 4431),
+            make_candle(5, 4431, 4437, 4425, 4432),
+            make_candle(10, 4432, 4438, 4426, 4433),
+            make_candle(15, 4433, 4439, 4427, 4434),
+            make_candle(20, 4434, 4440, 4428, 4435),
+
+            # آخرین کندل بسیار کوچک‌تر
+            make_candle(25, 4435, 4436, 4434, 4435.5),
         ]
     )
 
@@ -84,24 +88,14 @@ def main():
     # NORMAL VOLATILITY
     normal_series = MarketDataSeries(
         data=[
-            MarketData(
-                symbol="XAUUSD",
-                timeframe="M5",
-                timestamp=datetime(2026, 10, 4, 10, 20),
-                open=4430,
-                high=4434,
-                low=4426,
-                close=4430,
-            ),
-            MarketData(
-                symbol="XAUUSD",
-                timeframe="M5",
-                timestamp=datetime(2026, 10, 4, 10, 25),
-                open=4430,
-                high=4434,
-                low=4426,
-                close=4431,
-            ),
+            make_candle(0, 4430, 4434, 4426, 4431),
+            make_candle(5, 4431, 4435, 4427, 4432),
+            make_candle(10, 4432, 4436, 4428, 4433),
+            make_candle(15, 4433, 4437, 4429, 4434),
+            make_candle(20, 4434, 4438, 4430, 4435),
+
+            # تقریباً برابر میانگین
+            make_candle(25, 4435, 4439, 4431, 4436),
         ]
     )
 
