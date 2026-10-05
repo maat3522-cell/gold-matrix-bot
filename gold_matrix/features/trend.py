@@ -5,26 +5,16 @@ def detect_trend(
     series: MarketDataSeries,
 ) -> str:
 
-    if len(series) < 4:
+    if len(series) < 2:
         return "NEUTRAL"
 
-    close_1 = series.data[-1].close
-    close_2 = series.data[-2].close
-    close_3 = series.data[-3].close
-    close_4 = series.data[-4].close
+    previous_close = series.data[-2].close
+    latest_close = series.data[-1].close
 
-    if (
-        close_1 > close_2
-        and close_2 > close_3
-        and close_3 > close_4
-    ):
+    if latest_close > previous_close:
         return "BULLISH"
 
-    if (
-        close_1 < close_2
-        and close_2 < close_3
-        and close_3 < close_4
-    ):
+    if latest_close < previous_close:
         return "BEARISH"
 
     return "NEUTRAL"
