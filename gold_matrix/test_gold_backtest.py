@@ -12,6 +12,7 @@ from strategy import DefaultStrategy
 
 
 def build_sample_data():
+
     prices = [
         4430.0,
         4432.0,
@@ -152,54 +153,43 @@ def main():
     print("--------------------")
 
     print(f"Total trades: {result.total_trades}")
-    print(
-        f"Winning trades: "
-        f"{result.winning_trades}"
+    print(f"Winning trades: {result.winning_trades}")
+    print(f"Losing trades: {result.losing_trades}")
+    print(f"Total P/L: {result.total_profit_loss}")
+    print(f"Win rate: {result.win_rate}%")
+    print(f"Average profit: {result.average_profit}")
+    print(f"Average loss: {result.average_loss}")
+    print(f"Largest win: {result.largest_win}")
+    print(f"Largest loss: {result.largest_loss}")
+    print(f"Profit factor: {result.profit_factor}")
+    print(f"Max drawdown: {result.max_drawdown}")
+    print(f"Initial balance: {result.initial_balance}")
+    print(f"Final balance: {result.final_balance}")
+
+    tp_count = sum(
+        1
+        for trade in result.trades
+        if trade.exit_reason == "TP"
     )
-    print(
-        f"Losing trades: "
-        f"{result.losing_trades}"
+
+    sl_count = sum(
+        1
+        for trade in result.trades
+        if trade.exit_reason == "SL"
     )
-    print(
-        f"Total P/L: "
-        f"{result.total_profit_loss}"
+
+    end_count = sum(
+        1
+        for trade in result.trades
+        if trade.exit_reason == "END_OF_DATA"
     )
-    print(
-        f"Win rate: "
-        f"{result.win_rate}%"
-    )
-    print(
-        f"Average profit: "
-        f"{result.average_profit}"
-    )
-    print(
-        f"Average loss: "
-        f"{result.average_loss}"
-    )
-    print(
-        f"Largest win: "
-        f"{result.largest_win}"
-    )
-    print(
-        f"Largest loss: "
-        f"{result.largest_loss}"
-    )
-    print(
-        f"Profit factor: "
-        f"{result.profit_factor}"
-    )
-    print(
-        f"Max drawdown: "
-        f"{result.max_drawdown}"
-    )
-    print(
-        f"Initial balance: "
-        f"{result.initial_balance}"
-    )
-    print(
-        f"Final balance: "
-        f"{result.final_balance}"
-    )
+
+    print()
+    print("EXIT REASONS")
+    print("--------------------")
+    print(f"TP: {tp_count}")
+    print(f"SL: {sl_count}")
+    print(f"END_OF_DATA: {end_count}")
 
     print()
     print("BACKTEST COMPLETED")
