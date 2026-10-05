@@ -307,4 +307,5 @@ def run_feature_backtest(
         initial_balance=config.initial_balance,
         final_balance=final_balance,
         equity_curve=equity_curve,
+        trades=trades,
     )
