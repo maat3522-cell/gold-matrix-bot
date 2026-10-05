@@ -1,11 +1,15 @@
-from assets import AssetProfile
-
-from backtest.config import BacktestConfig
-from backtest.strategy_runner import run_feature_backtest
-
+```python
 from data.csv_loader import load_csv_market_data
 
+from assets import get_asset
+
 from strategy import DefaultStrategy
+
+from backtest.config import BacktestConfig
+
+from backtest.strategy_runner import (
+    run_feature_backtest,
+)
 
 
 def main():
@@ -14,7 +18,7 @@ def main():
     print("--------------------")
 
     file_path = (
-        "gold_matrix/data/sample_xauusd_m5.csv"
+        "gold_matrix/data/XAUUSD_5m.csv"
     )
 
     series = load_csv_market_data(
@@ -26,17 +30,7 @@ def main():
         f"{len(series.data)}"
     )
 
-    asset = AssetProfile(
-        symbol="XAUUSD",
-        asset_type="metal",
-        price_decimals=2,
-        point_size=0.01,
-        min_volume=0.01,
-        max_volume=100.0,
-        volume_step=0.01,
-        tick_size=0.01,
-        tick_value=1.0,
-    )
+    asset = get_asset("XAUUSD")
 
     strategy = DefaultStrategy(
         min_confidence=70
@@ -46,8 +40,6 @@ def main():
         initial_balance=10000.0,
         commission_per_trade=1.0,
         slippage_per_trade=1.0,
-        allow_long=True,
-        allow_short=True,
         stop_loss_points=150.0,
         take_profit_points=300.0,
     )
@@ -116,3 +108,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
