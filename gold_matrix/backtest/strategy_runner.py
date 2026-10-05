@@ -49,14 +49,16 @@ def run_feature_backtest(
         * asset.point_size
     )
 
-    for index in range(1, len(series.data)):
+    index = 1
 
-        current_series = MarketDataSeries(
+    while index < len(series.data) - 1:
+
+        signal_series = MarketDataSeries(
             data=series.data[: index + 1]
         )
 
         context = build_market_context(
-            series=current_series,
+            series=signal_series,
             asset=asset,
             timeframe=timeframe,
         )
@@ -66,25 +68,29 @@ def run_feature_backtest(
         decision = strategy.evaluate(score)
 
         if decision.signal == "WAIT":
+            index += 1
             continue
 
         if (
             decision.signal == "BUY"
             and not config.allow_long
         ):
+            index += 1
             continue
 
         if (
             decision.signal == "SELL"
             and not config.allow_short
         ):
+            index += 1
             continue
 
-        current_candle = series.data[index]
+        entry_candle = series.data[index + 1]
 
-        entry_price = current_candle.close
+        entry_price = entry_candle.open
 
         if decision.signal == "BUY":
+
             stop_loss = (
                 entry_price
                 - stop_loss_distance
@@ -95,18 +101,8 @@ def run_feature_backtest(
                 + take_profit_distance
             )
 
-            if current_candle.low <= stop_loss:
-                exit_price = stop_loss
-            elif current_candle.high >= take_profit:
-                exit_price = take_profit
-            else:
-                exit_price = current_candle.close
-
-            gross_profit_loss = (
-                exit_price - entry_price
-            )
-
         else:
+
             stop_loss = (
                 entry_price
                 + stop_loss_distance
@@ -117,15 +113,85 @@ def run_feature_backtest(
                 - take_profit_distance
             )
 
-            if current_candle.high >= stop_loss:
-                exit_price = stop_loss
-            elif current_candle.low <= take_profit:
-                exit_price = take_profit
+        exit_price = entry_price
+
+        trade_closed = False
+
+        exit_index = index + 1
+
+        while exit_index < len(series.data):
+
+            candle = series.data[exit_index]
+
+            if decision.signal == "BUY":
+
+                stop_hit = (
+                    candle.low <= stop_loss
+                )
+
+                take_profit_hit = (
+                    candle.high >= take_profit
+                )
+
+                if stop_hit and take_profit_hit:
+                    exit_price = stop_loss
+                    trade_closed = True
+                    break
+
+                if stop_hit:
+                    exit_price = stop_loss
+                    trade_closed = True
+                    break
+
+                if take_profit_hit:
+                    exit_price = take_profit
+                    trade_closed = True
+                    break
+
             else:
-                exit_price = current_candle.close
+
+                stop_hit = (
+                    candle.high >= stop_loss
+                )
+
+                take_profit_hit = (
+                    candle.low <= take_profit
+                )
+
+                if stop_hit and take_profit_hit:
+                    exit_price = stop_loss
+                    trade_closed = True
+                    break
+
+                if stop_hit:
+                    exit_price = stop_loss
+                    trade_closed = True
+                    break
+
+                if take_profit_hit:
+                    exit_price = take_profit
+                    trade_closed = True
+                    break
+
+            exit_index += 1
+
+        if not trade_closed:
+
+            exit_price = series.data[-1].close
+            exit_index = len(series.data) - 1
+
+        if decision.signal == "BUY":
 
             gross_profit_loss = (
-                entry_price - exit_price
+                exit_price
+                - entry_price
+            )
+
+        else:
+
+            gross_profit_loss = (
+                entry_price
+                - exit_price
             )
 
         cost = (
@@ -134,7 +200,8 @@ def run_feature_backtest(
         )
 
         profit_loss = (
-            gross_profit_loss - cost
+            gross_profit_loss
+            - cost
         )
 
         trades.append(
@@ -144,9 +211,13 @@ def run_feature_backtest(
                 direction=decision.signal,
                 entry_price=entry_price,
                 exit_price=exit_price,
+                stop_loss=stop_loss,
+                take_profit=take_profit,
                 profit_loss=profit_loss,
             )
         )
+
+        index = exit_index + 1
 
     total_trades = len(trades)
 
@@ -175,12 +246,29 @@ def run_feature_backtest(
         else 0.0
     )
 
-    average_profit = calculate_average_profit(trades)
-    average_loss = calculate_average_loss(trades)
-    largest_win = calculate_largest_win(trades)
-    largest_loss = calculate_largest_loss(trades)
-    profit_factor = calculate_profit_factor(trades)
-    max_drawdown = calculate_max_drawdown(trades)
+    average_profit = calculate_average_profit(
+        trades
+    )
+
+    average_loss = calculate_average_loss(
+        trades
+    )
+
+    largest_win = calculate_largest_win(
+        trades
+    )
+
+    largest_loss = calculate_largest_loss(
+        trades
+    )
+
+    profit_factor = calculate_profit_factor(
+        trades
+    )
+
+    max_drawdown = calculate_max_drawdown(
+        trades
+    )
 
     equity_curve = calculate_equity_curve(
         trades=trades,
