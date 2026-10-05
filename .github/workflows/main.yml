@@ -112,4 +112,7 @@ jobs:
       - name: Test Gold Backtest
         run: python gold_matrix/test_gold_backtest.py
 
+      - name: Test CSV Loader
+        run: python gold_matrix/test_csv_loader.py
+
         
