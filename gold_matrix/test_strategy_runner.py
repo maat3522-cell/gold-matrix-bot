@@ -37,6 +37,8 @@ def main():
         slippage_per_trade=1.0,
         allow_long=True,
         allow_short=True,
+        stop_loss_points=150.0,
+        take_profit_points=300.0,
     )
 
     series = MarketDataSeries(
