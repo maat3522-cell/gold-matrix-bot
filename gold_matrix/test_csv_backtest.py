@@ -1,15 +1,8 @@
-```python
 from data.csv_loader import load_csv_market_data
-
 from assets import get_asset
-
 from strategy import DefaultStrategy
-
 from backtest.config import BacktestConfig
-
-from backtest.strategy_runner import (
-    run_feature_backtest,
-)
+from backtest.strategy_runner import run_feature_backtest
 
 
 def main():
@@ -17,18 +10,11 @@ def main():
     print("CSV GOLD BACKTEST")
     print("--------------------")
 
-    file_path = (
-        "gold_matrix/data/XAUUSD_5m.csv"
-    )
+    file_path = "gold_matrix/data/XAUUSD_5m.csv"
 
-    series = load_csv_market_data(
-        file_path
-    )
+    series = load_csv_market_data(file_path)
 
-    print(
-        f"Loaded candles: "
-        f"{len(series.data)}"
-    )
+    print(f"Loaded candles: {len(series.data)}")
 
     asset = get_asset("XAUUSD")
 
@@ -57,50 +43,15 @@ def main():
     print("RESULT")
     print("--------------------")
 
-    print(
-        f"Total trades: "
-        f"{result.total_trades}"
-    )
-
-    print(
-        f"Winning trades: "
-        f"{result.winning_trades}"
-    )
-
-    print(
-        f"Losing trades: "
-        f"{result.losing_trades}"
-    )
-
-    print(
-        f"Total P/L: "
-        f"{result.total_profit_loss}"
-    )
-
-    print(
-        f"Win rate: "
-        f"{result.win_rate}%"
-    )
-
-    print(
-        f"Profit factor: "
-        f"{result.profit_factor}"
-    )
-
-    print(
-        f"Max drawdown: "
-        f"{result.max_drawdown}"
-    )
-
-    print(
-        f"Initial balance: "
-        f"{result.initial_balance}"
-    )
-
-    print(
-        f"Final balance: "
-        f"{result.final_balance}"
-    )
+    print(f"Total trades: {result.total_trades}")
+    print(f"Winning trades: {result.winning_trades}")
+    print(f"Losing trades: {result.losing_trades}")
+    print(f"Total P/L: {result.total_profit_loss}")
+    print(f"Win rate: {result.win_rate}%")
+    print(f"Profit factor: {result.profit_factor}")
+    print(f"Max drawdown: {result.max_drawdown}")
+    print(f"Initial balance: {result.initial_balance}")
+    print(f"Final balance: {result.final_balance}")
 
     print()
     print("CSV BACKTEST COMPLETED")
@@ -108,4 +59,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-```
