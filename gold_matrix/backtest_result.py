@@ -46,3 +46,5 @@ class BacktestResult:
     final_balance: float = 0.0
 
     equity_curve: List[float] = None
+
+    trades: List[BacktestTrade] = None
