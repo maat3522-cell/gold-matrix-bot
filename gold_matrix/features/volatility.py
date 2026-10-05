@@ -5,23 +5,29 @@ def detect_volatility(
     series: MarketDataSeries,
 ) -> str:
 
-    if len(series) < 2:
+    if len(series) < 6:
         return "NORMAL"
 
-    previous_range = (
-        series.data[-2].high
-        - series.data[-2].low
+    ranges = []
+
+    for candle in series.data[-6:]:
+        candle_range = (
+            candle.high - candle.low
+        )
+
+        ranges.append(candle_range)
+
+    average_range = (
+        sum(ranges[:-1])
+        / len(ranges[:-1])
     )
 
-    latest_range = (
-        series.data[-1].high
-        - series.data[-1].low
-    )
+    latest_range = ranges[-1]
 
-    if latest_range > previous_range:
+    if latest_range > average_range * 1.5:
         return "HIGH"
 
-    if latest_range < previous_range:
+    if latest_range < average_range * 0.7:
         return "LOW"
 
     return "NORMAL"
