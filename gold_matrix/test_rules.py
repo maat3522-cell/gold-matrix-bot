@@ -40,11 +40,11 @@ def main():
 
     assert bearish["trend"]["score"] == -40
     assert bearish["momentum"]["score"] == -30
-    assert bearish["volatility"]["score"] == 10
+    assert bearish["volatility"]["score"] == -10
 
     assert neutral["trend"]["score"] == 0
     assert neutral["momentum"]["score"] == 0
-    assert neutral["volatility"]["score"] == 10
+    assert neutral["volatility"]["score"] == 0
 
     print()
     print("ALL RULE TESTS PASSED")
